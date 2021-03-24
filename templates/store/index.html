@@ -158,7 +158,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="caption">
-                            <a href="product-details.html" class="product-title">{{product.title}}</a>
+                            <a href="{% url 'detail' product.slug %}" class="product-title">{{product.title}}</a>
                             <p class="fg-theme">GHC{{product.price}}</p>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                             </div>
                             <div class="card-footer">
                                 <div class="caption">
-                                    <a href="product-details.html" class="product-title">
+                                    <a href="{% url 'detail' product.slug %}" class="product-title">
                                     {{product.price}}
                                     </a>
                                     <p class="fg-theme">GHC {{product.price}}</p>

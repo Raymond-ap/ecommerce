@@ -2,95 +2,14 @@
 {% load static %}
 {% block title %}{% endblock title %}
 {% block content %}
-<!-- Modal Product -->
-<div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="productLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="icon-close2"></span>
-                </button>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="owl-carousel product-single">
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket.jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(2).jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(3).jpg' %}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h4 class="modal-title" id="productLabel">Product Title</h4>
-                        <div class="ratings text-warning">
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star-o"></span>
-                        </div>
-                        <p class="mt-3">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua...</p>
-
-                        <p><span class="fs-large fw-bold">Availability:</span> 240</p>
-
-                        <p class="fs-large fw-bold mb-1 mt-3">Color:</p>
-                        <div class="color-pick">
-                            <span class="color-item bg-danger"></span>
-                            <span class="color-item bg-warning"></span>
-                            <span class="color-item bg-success"></span>
-                            <span class="color-item bg-primary"></span>
-                            <span class="color-item bg-dark"></span>
-                        </div>
-
-                        <p class="fs-large fw-bold mb-1 mt-3">Size:</p>
-                        <div class="btn-group btn-group-gap">
-                            <button class="btn btn-theme-outline btn-sm">XS</button>
-                            <button class="btn btn-theme-outline btn-sm">S</button>
-                            <button class="btn btn-theme-outline btn-sm">M</button>
-                            <button class="btn btn-theme-outline btn-sm">L</button>
-                            <button class="btn btn-theme-outline btn-sm">XL</button>
-                        </div>
-
-                        <p class="fs-large fw-bold mb-1 mt-3">Quantity:</p>
-                        <div class="number-input">
-                            <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
-                            <input type="number" class="form-control" name="number" min="0" max="250">
-                            <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
-                        </div>
-
-                        <h5 class="mt-4 mb-3">Price: <span class="fg-theme">$29.99</span></h5>
-                        <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
-                        <a href="checkout.html" class="btn btn-theme my-1">Proceed Checkout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> <!-- End modal product -->
 
 <div class="site-section py-5">
     <div class="container">
         <ul class="breadcrumb bg-white">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item"><a href="product.html">Product</a></li>
-            <li class="breadcrumb-item"><a href="#">Women</a></li>
-            <li class="breadcrumb-item"><a href="#">Pants</a></li>
-            <li class="breadcrumb-item">Product Name</li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'products' %}">Product</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'products' %}?category={{category.category}}">{{product.category}}</a></li>
+            <li class="breadcrumb-item">{{product.title}}</li>
         </ul>
 
         <div class="row">
@@ -99,62 +18,49 @@
                     <div class="col-md-9">
                         <div class="btn-fullscreen" data-fancybox-trigger="product"><span class="icon-fullscreen"></span></div>
                         <div class="d-none">
-                            <div class="img-place" data-fancybox="product" data-src="img/Faux_Fur_Jacket.jpg">
-                                <img src="img/Faux_Fur_Jacket.jpg" alt="">
+                        {% for images in product_images %}
+                            <div class="img-place" data-fancybox="product" data-src="{{images.image.url}}">
+                                <img src="{{images.image.url}}" alt="{{product.title}}">
                             </div>
-                            <div class="img-place" data-fancybox="product" data-src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}">
-                                <img src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}" alt="">
+                        {% endfor %}
+                         <div class="img-place" data-fancybox="product" data-src="{{images.image.url}}">
+                                <img src="{{product.thumbnail.url}}" alt="{{product.title}}">
                             </div>
-                            <div class="img-place" data-fancybox="product" data-src="{% static 'img/Faux_Fur_Jacket_(2).jpg' %}">
-                                <img src="{% static 'img/Faux_Fur_Jacket_(2).jpg' %}" alt="">
-                            </div>
-                            <div class="img-place" data-fancybox="product" data-src="{% static 'img/Faux_Fur_Jacket_(3).jpg' %}">
-                                <img src="{% static 'img/Faux_Fur_Jacket_(3).jpg' %}" alt="">
-                            </div>
+
                         </div>
                         <div class="owl-carousel product-single">
+                        {% for images in product_images %}
                             <div class="item">
                                 <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket.jpg' %}" alt="">
+                                    <img src="{{images.image.url}}" alt="{{product.title}}">
                                 </div>
                             </div>
-                            <div class="item">
+                        {% endfor %}
+                         <div class="item">
                                 <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(2).jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(3).jpg' %}" alt="">
+                                    <img src="{{product.thumbnail.url}}" alt="{{product.title}}">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="product-single-thumb">
+                        {% for images in product_images %}
                             <div class="product-item active">
-                                <img src="{% static 'img/Faux_Fur_Jacket.jpg' %}" alt="">
+                                <img src="{{images.image.url}}" alt="{{product.title}}">
                             </div>
-                            <div class="product-item">
-                                <img src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}" alt="">
-                            </div>
-                            <div class="product-item">
-                                <img src="{% static 'img/Faux_Fur_Jacket_(2).jpg' %}" alt="">
-                            </div>
-                            <div class="product-item">
-                                <img src="{% static 'img/Faux_Fur_Jacket_(3).jpg' %}" alt="">
+                        {% endfor %}
+                         <div class="product-item active">
+                                <img src="{{product.thumbnail.url}}" alt="{{product.title}}">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-5 py-3">
-                <h3>Product Name</h3>
+                <h3>
+                {{product.title}}
+                </h3>
                 <div class="ratings text-warning">
                     <span class="icon icon-star"></span>
                     <span class="icon icon-star"></span>
@@ -162,9 +68,13 @@
                     <span class="icon icon-star"></span>
                     <span class="icon icon-star-o"></span>
                 </div>
-                <p class="mt-3">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+                <p class="mt-3">
+                {{product.detail_preview}}
+                </p>
 
-                <p><span class="fs-large fw-bold">Availability:</span> 240</p>
+                {% if product.availiability %}
+                <p><span class="fs-large fw-bold">Availability:</span> {{product.availiability}}</p>
+                {% endif %}
 
                 <p class="fs-large fw-bold mb-1 mt-3">Color:</p>
                 <div class="color-pick" data-role="selected" data-multiple="no">
@@ -191,7 +101,7 @@
                     <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
                 </div>
 
-                <h4 class="mt-4 mb-3">Price: $29.99</h4>
+                <h4 class="mt-4 mb-3">Price: GHC{{product.price}}</h4>
                 <a href="#" class="btn btn-theme-outline mr-2"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
                 <a href="#" class="btn btn-theme">Proceed Checkout</a>
             </div>
@@ -203,46 +113,14 @@
                     <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Additional Information</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Review (2)</a>
                 </li>
             </ul>
             <div class="tab-content mt-3" id="myTabContent">
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
-
-                    Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. 
+                    {{product.detail|safe}}
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <ul class="list-unstyled">
-                        <li class="d-flex flex-row">
-                            <span class="col-4 py-2">Weight :</span>
-                            <span class="col-4 py-2 text-secondary">0.79 kg</span>
-                        </li>
-
-                        <li class="d-flex flex-row">
-                            <span class="col-4 py-2">Dimensions :</span>
-                            <span class="col-4 py-2 text-secondary">110 x 33 x 100 cm</span>
-                        </li>
-
-                        <li class="d-flex flex-row">
-                            <span class="col-4 py-2">Materials :</span>
-                            <span class="col-4 py-2 text-secondary">60% cotton</span>
-                        </li>
-
-                        <li class="d-flex flex-row">
-                            <span class="col-4 py-2">Color :</span>
-                            <span class="col-4 py-2 text-secondary">Black, Blue, Grey, Green, Red, White</span>
-                        </li>
-
-                        <li class="d-flex flex-row">
-                            <span class="col-4 py-2">Size :</span>
-                            <span class="col-4 py-2 text-secondary">XL, L, M, S</span>
-                        </li>
-                    </ul>
-                </div>
+                {% comment %} reviews {% endcomment %}
                 <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="row">
                         <div class="col-sm-10 col-md-8 col-lg-6">
@@ -345,8 +223,8 @@
         <div class="row no-gutters bg-light mt-5">
             <div class="col-12">
                 <ul class="list-unstyled list-inline text-center mb-0 py-4">
-                    <li class="list-inline-item">SKU: <span class="text-secondary">JAK-923031</span></li>
-                    <li class="list-inline-item">Categories: <span class="text-secondary">Jacket, Womens</span></li>
+                    <li class="list-inline-item">Name: <span class="text-secondary">{{product.title}}</span></li>
+                    <li class="list-inline-item">Categories: <span class="text-secondary">{{product.category}}</span></li>
                 </ul>
             </div>
         </div>
@@ -355,94 +233,119 @@
             <div class="col-12 mt-3">
                 <h2 class="title-section text-center">Similar Product</h2>
             </div>
+            {% for product in products %}
+                <!-- Modal Product -->
+                <div class="modal fade" id="modalProduct-{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="productLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="icon-close2"></span>
+                                </button>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="owl-carousel product-single">
+                                            <div class="item">
+                                                <div class="img-place">
+                                                    <img src="{{product.thumbnail.url}}" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="img-place">
+                                                    <img src="{{product.thumbnail.url}}" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="img-place">
+                                                    <img src="{{product.thumbnail.url}}" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="img-place">
+                                                    <img src="{{product.thumbnail.url}}" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4 class="modal-title" id="productLabel">{{product.title}}</h4>
+                                        <div class="ratings text-warning">
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star"></span>
+                                            <span class="icon icon-star-o"></span>
+                                        </div>
+                                        <p class="mt-3">
+                                        {{product.detail_preview}}
+                                        </p>
+
+                                        {% if product.availiability %}
+                                        <p><span class="fs-large fw-bold">Availability:</span> {{product.availiability}}</p>
+                                        {% endif %}
+
+                                        {% comment %} 
+                                        <p class="fs-large fw-bold mb-1 mt-3">Color:</p>
+                                    <div class="color-pick">
+                                            <span class="color-item bg-danger"></span>
+                                            <span class="color-item bg-warning"></span>
+                                            <span class="color-item bg-success"></span>
+                                            <span class="color-item bg-primary"></span>
+                                            <span class="color-item bg-dark"></span>
+                                        </div>
+
+                                        <p class="fs-large fw-bold mb-1 mt-3">Size:</p>
+                                        <div class="btn-group btn-group-gap">
+                                            <button class="btn btn-theme-outline btn-sm">XS</button>
+                                            <button class="btn btn-theme-outline btn-sm">S</button>
+                                            <button class="btn btn-theme-outline btn-sm">M</button>
+                                            <button class="btn btn-theme-outline btn-sm">L</button>
+                                            <button class="btn btn-theme-outline btn-sm">XL</button>
+                                        </div> {% endcomment %}
+
+                                        <p class="fs-large fw-bold mb-1 mt-3">Quantity:</p>
+                                        <div class="number-input">
+                                            <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
+                                            <input type="number" class="form-control" name="number" min="0" max="250">
+                                            <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
+                                        </div>
+
+                                        <h5 class="mt-4 mb-3">Price: <span class="fg-theme">
+                                        GHC{{product.price}}
+                                        </span></h5>
+                                        <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
+                                        <a href="checkout.html" class="btn btn-theme my-1">Proceed Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <!-- End modal product -->
 
             <div class="col-lg-3">
                 <div class="card card-product">
                     <div class="card-header">
                         <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
                         <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Double_Breasted_Jacket_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
+                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{{product.thumbnail.url}}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
                     </div>
                     <div class="card-body">
                         <div class="img-place">
-                            <img src="{% static 'img/Double_Breasted_Jacket_(1).jpg' %}" alt="">
+                            <img src="{{product.thumbnail.url}}" alt="{{product.title}}">
                         </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
+                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct-{{product.id}}">Quick View</button>
                     </div>
                     <div class="card-footer">
                         <div class="caption">
-                            <p class="product-title">Double Breasted Jacket</p>
-                            <p class="fg-theme">$19.99</p>
+                            <a href="{% url 'detail' product.slug %}" class="product-title">{{product.title}}</a>
+                            <p class="fg-theme">GHC{{product.price}}</p>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
 
-            <div class="col-lg-3">
-                <div class="card card-product">
-                    <div class="card-header">
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="img-place">
-                            <img src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}" alt="">
-                        </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                    </div>
-                    <div class="card-footer">
-                        <div class="caption">
-                            <p class="product-title">Faux Fur Jacket</p>
-                            <p class="fg-theme">$19.99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card card-product">
-                    <div class="card-header">
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Loafers.jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="img-place">
-                            <img src="{% static 'img/Loafers.jpg' %}" alt="">
-                        </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                    </div>
-                    <div class="card-footer">
-                        <div class="caption">
-                            <p class="product-title">Loafers</p>
-                            <p class="fg-theme">$19.99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="card card-product">
-                    <div class="card-header">
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Oversized_Shirt_Jacket_(2).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="img-place">
-                            <img src="{% static 'img/Oversized_Shirt_Jacket_(2).jpg' %}" alt="">
-                        </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                    </div>
-                    <div class="card-footer">
-                        <div class="caption">
-                            <p class="product-title">Oversized Shirt Jacket</p>
-                            <p class="fg-theme">$19.99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

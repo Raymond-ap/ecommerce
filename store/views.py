@@ -15,8 +15,15 @@ def homePage(request):
 
 
 def productsView(request):
-    products = Product.objects.filter(published=True).order_by('created')
     categories = Category.objects.all().order_by('-created')
+
+    # Get Category
+    category = request.GET.get('category')
+    if category == None:
+        products = Product.objects.filter(published=True).order_by('created')
+    else:
+        products = Product.objects.filter(
+            published=True, category__category=category)
 
     context = {
         'products': products,
@@ -26,7 +33,17 @@ def productsView(request):
 
 
 def productDetail(request, slug):
-    return render(request, 'store/product-details.html')
+    product = Product.objects.get(slug=slug)
+    product_images = product.images.all()
+
+    products = Product.objects.filter(published=True).order_by('created')[:4]
+
+    context = {
+        'product': product,
+        'product_images': product_images,
+        'products': products
+    }
+    return render(request, 'store/product-details.html', context)
 
 
 def aboutView(request):
