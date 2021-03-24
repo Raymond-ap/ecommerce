@@ -82,3 +82,52 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class OrderItem(models.Model):
+    item = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ordered = models.BooleanField(default=False)
+    quantity = models.IntegerField(default=1)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.item.name
+
+    @property
+    def getTotalPrice(self):
+        return self.item.price * self.quantity
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(OrderItem)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    ordered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user.username}'
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(OrderItem)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    ordered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user.username}'
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(OrderItem)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    ordered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user.username}'
+
