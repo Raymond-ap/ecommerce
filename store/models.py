@@ -24,14 +24,16 @@ class Category(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=200)
-    detail_preview = models.CharField(max_length=1000)
+    detail_preview = models.CharField(max_length=1000, blank=True, null=True)
     detail = RichTextField()
+    thumbnail = models.ImageField(upload_to='images', blank=True, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True)
     color = models.ForeignKey(
-        Color, on_delete=models.SET_NULL, null=True)
-    availiability = models.IntegerField()
+        Color, on_delete=models.SET_NULL, null=True, blank=True)
+    availiability = models.IntegerField(blank=True, null=True)
     price = models.FloatField()
+    published = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(blank=True, null=True)
 
@@ -51,14 +53,14 @@ class Product(models.Model):
                 slug = slugify(self.slug) + '-' + str(count)
                 has_slug = Product.objects.filter(slug=slug).exists()
             self.slug = slug
-        super().save(self, *args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='images')
 
     def __str__(self):

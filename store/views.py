@@ -1,14 +1,28 @@
 from django.shortcuts import render
-
-# Create your views here.
+from .models import Product, Category
 
 
 def homePage(request):
-    return render(request, 'store/index.html')
+    featured = Product.objects.filter(published=True).order_by('created')[:4]
+    new_arrival = Product.objects.filter(
+        published=True).order_by('-created')[:8]
+
+    context = {
+        'featured': featured,
+        'new_arrival': new_arrival
+    }
+    return render(request, 'store/index.html', context)
 
 
 def productsView(request):
-    return render(request, 'store/product.html')
+    products = Product.objects.filter(published=True).order_by('created')
+    categories = Category.objects.all().order_by('-created')
+
+    context = {
+        'products': products,
+        'categories': categories
+    }
+    return render(request, 'store/product.html', context)
 
 
 def productDetail(request, slug):

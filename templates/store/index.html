@@ -1,86 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% static "img" as baseUrl %} 
 {% block content %}
-<!-- Modal Product -->
-<div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="productLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="icon-close2"></span>
-                </button>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="owl-carousel product-single">
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket.jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(1).jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(2).jpg' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Faux_Fur_Jacket_(3).jpg' %}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h4 class="modal-title" id="productLabel">Product Title</h4>
-                        <div class="ratings text-warning">
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star"></span>
-                            <span class="icon icon-star-o"></span>
-                        </div>
-                        <p class="mt-3">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua...</p>
-
-                        <p><span class="fs-large fw-bold">Availability:</span> 240</p>
-
-                        <p class="fs-large fw-bold mb-1 mt-3">Color:</p>
-                        <div class="color-pick">
-                            <span class="color-item bg-danger"></span>
-                            <span class="color-item bg-warning"></span>
-                            <span class="color-item bg-success"></span>
-                            <span class="color-item bg-primary"></span>
-                            <span class="color-item bg-dark"></span>
-                        </div>
-
-                        <p class="fs-large fw-bold mb-1 mt-3">Size:</p>
-                        <div class="btn-group btn-group-gap">
-                            <button class="btn btn-theme-outline btn-sm">XS</button>
-                            <button class="btn btn-theme-outline btn-sm">S</button>
-                            <button class="btn btn-theme-outline btn-sm">M</button>
-                            <button class="btn btn-theme-outline btn-sm">L</button>
-                            <button class="btn btn-theme-outline btn-sm">XL</button>
-                        </div>
-
-                        <p class="fs-large fw-bold mb-1 mt-3">Quantity:</p>
-                        <div class="number-input">
-                            <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
-                            <input type="number" class="form-control" name="number" min="0" max="250">
-                            <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
-                        </div>
-
-                        <h5 class="mt-4 mb-3">Price: <span class="fg-theme">$29.99</span></h5>
-                        <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
-                        <a href="checkout.html" class="btn btn-theme my-1">Proceed Checkout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> <!-- End modal product -->
 
 <div class="site-section home-section">
     <div class="container">
@@ -131,90 +52,119 @@
         <h3 class="title-section">Featured Product</h3>
 
         <div class="row justify-content-center mt-2">
+
+            {% for product in featured %}
+            <!-- Modal Product -->
+            <div class="modal fade" id="modalProduct-{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="productLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="icon-close2"></span>
+                            </button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="owl-carousel product-single">
+                                        <div class="item">
+                                            <div class="img-place">
+                                                <img src="{{product.thumbnail.url}}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="img-place">
+                                                <img src="{{product.thumbnail.url}}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="img-place">
+                                                <img src="{{product.thumbnail.url}}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="img-place">
+                                                <img src="{{product.thumbnail.url}}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="modal-title" id="productLabel">{{product.title}}</h4>
+                                    <div class="ratings text-warning">
+                                        <span class="icon icon-star"></span>
+                                        <span class="icon icon-star"></span>
+                                        <span class="icon icon-star"></span>
+                                        <span class="icon icon-star"></span>
+                                        <span class="icon icon-star-o"></span>
+                                    </div>
+                                    <p class="mt-3">
+                                    {{product.detail_preview}}
+                                    </p>
+
+                                    {% if product.availiability %}
+                                    <p><span class="fs-large fw-bold">Availability:</span> {{product.availiability}}</p>
+                                    {% endif %}
+
+                                    {% comment %} 
+                                     <p class="fs-large fw-bold mb-1 mt-3">Color:</p>
+                                   <div class="color-pick">
+                                        <span class="color-item bg-danger"></span>
+                                        <span class="color-item bg-warning"></span>
+                                        <span class="color-item bg-success"></span>
+                                        <span class="color-item bg-primary"></span>
+                                        <span class="color-item bg-dark"></span>
+                                    </div>
+
+                                    <p class="fs-large fw-bold mb-1 mt-3">Size:</p>
+                                    <div class="btn-group btn-group-gap">
+                                        <button class="btn btn-theme-outline btn-sm">XS</button>
+                                        <button class="btn btn-theme-outline btn-sm">S</button>
+                                        <button class="btn btn-theme-outline btn-sm">M</button>
+                                        <button class="btn btn-theme-outline btn-sm">L</button>
+                                        <button class="btn btn-theme-outline btn-sm">XL</button>
+                                    </div> {% endcomment %}
+
+                                    <p class="fs-large fw-bold mb-1 mt-3">Quantity:</p>
+                                    <div class="number-input">
+                                        <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
+                                        <input type="number" class="form-control" name="number" min="0" max="250">
+                                        <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
+                                    </div>
+
+                                    <h5 class="mt-4 mb-3">Price: <span class="fg-theme">
+                                    GHC{{product.price}}
+                                    </span></h5>
+                                    <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
+                                    <a href="checkout.html" class="btn btn-theme my-1">Proceed Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <!-- End modal product -->
+
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="card card-product">
                     <div class="card-header">
                         <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
                         <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Cargo_Joggers_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
+                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{{product.thumbnail.url}}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
                     </div>
                     <div class="card-body">
                         <div class="img-place">
-                            <img src="{% static 'img/Cargo_Joggers_(1).jpg' %}" alt="">
+                            <img src="{{product.thumbnail.url}}" alt="{{product.title}}">
                         </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
+                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct-{{product.id}}">Quick View</button>
                     </div>
                     <div class="card-footer">
                         <div class="caption">
-                            <a href="product-details.html" class="product-title">Cargo Joggers</a>
-                            <p class="fg-theme">$19.99</p>
+                            <a href="product-details.html" class="product-title">{{product.title}}</a>
+                            <p class="fg-theme">GHC{{product.price}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-product">
-                    <div class="card-header">
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Oversized_Shirt_Jacket_(2).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="img-place">
-                            <img src="{% static 'img/Oversized_Shirt_Jacket_(2).jpg' %}" alt="">
-                        </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                    </div>
-                    <div class="card-footer">
-                        <div class="caption">
-                            <a href="product-details.html" class="product-title">Oversized Shirt Jacket</a>
-                            <p class="fg-theme">$19.99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-product">
-                    <div class="card-header">
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Skinny_Fit_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="img-place">
-                            <img src="{% static 'img/Skinny_Fit_(1).jpg' %}" alt="">
-                        </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                    </div>
-                    <div class="card-footer">
-                        <div class="caption">
-                            <a href="product-details.html" class="product-title">Skinny Fit</a>
-                            <p class="fg-theme">$19.99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-product">
-                    <div class="card-header">
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Super_Slim-fit_Pants_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="img-place">
-                            <img src="{% static 'img/Super_Slim-fit_Pants_(1).jpg' %}" alt="">
-                        </div>
-                        <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                    </div>
-                    <div class="card-footer">
-                        <div class="caption">
-                            <a href="product-details.html" class="product-title">Super Slim Fit Pants</a>
-                            <p class="fg-theme">$19.99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -222,95 +172,124 @@
 <div class="site-section pt-3">
     <div class="container">
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col">
                 <h3 class="title-section">New Arrivals</h3>
 
                 <div class="row mt-2">
+                {% for product in new_arrival %}
+                    <!-- Modal Product -->
+                    <div class="modal fade" id="modalProduct-{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="productLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="icon-close2"></span>
+                                    </button>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="owl-carousel product-single">
+                                                <div class="item">
+                                                    <div class="img-place">
+                                                        <img src="{{product.thumbnail.url}}" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <div class="img-place">
+                                                        <img src="{{product.thumbnail.url}}" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <div class="img-place">
+                                                        <img src="{{product.thumbnail.url}}" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <div class="img-place">
+                                                        <img src="{{product.thumbnail.url}}" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4 class="modal-title" id="productLabel">{{product.title}}</h4>
+                                            <div class="ratings text-warning">
+                                                <span class="icon icon-star"></span>
+                                                <span class="icon icon-star"></span>
+                                                <span class="icon icon-star"></span>
+                                                <span class="icon icon-star"></span>
+                                                <span class="icon icon-star-o"></span>
+                                            </div>
+                                            <p class="mt-3">
+                                            {{product.detail_preview}}
+                                            </p>
+
+                                            {% if product.availiability %}
+                                            <p><span class="fs-large fw-bold">Availability:</span> {{product.availiability}}</p>
+                                            {% endif %}
+
+                                            {% comment %} 
+                                            <p class="fs-large fw-bold mb-1 mt-3">Color:</p>
+                                        <div class="color-pick">
+                                                <span class="color-item bg-danger"></span>
+                                                <span class="color-item bg-warning"></span>
+                                                <span class="color-item bg-success"></span>
+                                                <span class="color-item bg-primary"></span>
+                                                <span class="color-item bg-dark"></span>
+                                            </div>
+
+                                            <p class="fs-large fw-bold mb-1 mt-3">Size:</p>
+                                            <div class="btn-group btn-group-gap">
+                                                <button class="btn btn-theme-outline btn-sm">XS</button>
+                                                <button class="btn btn-theme-outline btn-sm">S</button>
+                                                <button class="btn btn-theme-outline btn-sm">M</button>
+                                                <button class="btn btn-theme-outline btn-sm">L</button>
+                                                <button class="btn btn-theme-outline btn-sm">XL</button>
+                                            </div> {% endcomment %}
+
+                                            <p class="fs-large fw-bold mb-1 mt-3">Quantity:</p>
+                                            <div class="number-input">
+                                                <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
+                                                <input type="number" class="form-control" name="number" min="0" max="250">
+                                                <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
+                                            </div>
+
+                                            <h5 class="mt-4 mb-3">Price: <span class="fg-theme">
+                                            GHC{{product.price}}
+                                            </span></h5>
+                                            <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
+                                            <a href="checkout.html" class="btn btn-theme my-1">Proceed Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <!-- End modal product -->
+
                     <div class="col-sm-6 col-md-4">
                         <div class="card card-product">
                             <div class="card-header">
                                 <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
                                 <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Oversized_Shirt_Jacket_(2).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
+                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{{product.thumbnail.url}}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
                             </div>
                             <div class="card-body">
                                 <div class="img-place">
-                                    <img src="{% static 'img/Oversized_Shirt_Jacket_(2).jpg' %}" alt="">
+                                    <img src="{{product.thumbnail.url}}" alt="">
                                 </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
+                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct-{{product.id}}">Quick View</button>
                             </div>
                             <div class="card-footer">
                                 <div class="caption">
-                                    <a href="product-details.html" class="product-title">Oversized Shirt Jacket</a>
-                                    <p class="fg-theme">$19.99</p>
+                                    <a href="product-details.html" class="product-title">
+                                    {{product.price}}
+                                    </a>
+                                    <p class="fg-theme">GHC {{product.price}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="card card-product">
-                            <div class="card-header">
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Cargo_Joggers_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Cargo_Joggers_(1).jpg' %}" alt="">
-                                </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                            </div>
-                            <div class="card-footer">
-                                <div class="caption">
-                                    <a href="product-details.html" class="product-title">Cargo Joggers</a>
-                                    <p class="fg-theme">$19.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="card card-product">
-                            <div class="card-header">
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Double_Breasted_Jacket_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="badge badge-danger">Hot</div>
-                                <div class="img-place">
-                                    <img src="{% static 'img/Double_Breasted_Jacket_(1).jpg' %}" alt="">
-                                </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                            </div>
-                            <div class="card-footer">
-                                <div class="caption">
-                                    <a href="product-details.html" class="product-title">Double Breasted Jacket</a>
-                                    <p class="fg-theme">$19.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-4">
-                        <div class="card card-product">
-                            <div class="card-header">
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Skinny_Fit_Suit_Pants_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Skinny_Fit_Suit_Pants_(1).jpg' %}" alt="">
-                                </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                            </div>
-                            <div class="card-footer">
-                                <div class="caption">
-                                    <a href="product-details.html" class="product-title">Skinny Fit Suit Pants</a>
-                                    <p class="fg-theme">$19.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                {% endfor %}
                     <div class="col-12 col-md-8">
                         <div class="card card-collection-tiles">
                             <div class="card-body">
@@ -355,101 +334,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <div class="card card-product">
-                            <div class="card-header">
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Loafers_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="img-place">
-                                    <img src="{% static 'img/Loafers_(1).jpg' %}" alt="">
-                                </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                            </div>
-                            <div class="card-footer">
-                                <div class="caption">
-                                    <a href="product-details.html" class="product-title">Loafers</a>
-                                    <p class="fg-theme">$19.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
-            <div class="col-12 col-lg-3">
-                <h3 class="title-section text-center mt-5 mt-lg-0">Best Sellers</h3>
-                
-                <div class="row mt-2">
-                    <div class="col-sm-6 col-md-4 col-lg-12">
-                        <div class="card card-product">
-                            <div class="card-header">
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Double_Breasted_Jacket_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="badge badge-sale">01</div>
-                                <div class="img-place">
-                                    <img src="{% static 'img/Double_Breasted_Jacket_(1).jpg' %}" alt="">
-                                </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                            </div>
-                            <div class="card-footer">
-                                <div class="caption">
-                                    <a href="product-details.html" class="product-title">Double Breasted Jacket</a>
-                                    <p class="fg-theme">$19.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-12">
-                        <div class="card card-product">
-                            <div class="card-header">
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Skinny_Fit_Suit_Pants_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="badge badge-sale">02</div>
-                                <div class="img-place">
-                                    <img src="{% static 'img/Skinny_Fit_Suit_Pants_(1).jpg' %}" alt="">
-                                </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                            </div>
-                            <div class="card-footer">
-                                <div class="caption">
-                                    <a href="product-details.html" class="product-title">Skinny Fit Suit Pants</a>
-                                    <p class="fg-theme">$19.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-12">
-                        <div class="card card-product">
-                            <div class="card-header">
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-fancybox data-src="{% static 'img/Super_Slim-fit_Pants_(1).jpg' %}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="badge badge-sale">03</div>
-                                <div class="img-place">
-                                    <img src="{% static 'img/Super_Slim-fit_Pants_(1).jpg' %}" alt="">
-                                </div>
-                                <button class="btn btn-theme btn-rounded btn-sm btn-noanimate" data-toggle="modal" data-target="#modalProduct">Quick View</button>
-                            </div>
-                            <div class="card-footer">
-                                <div class="caption">
-                                    <a href="product-details.html" class="product-title">Super Slim Fit Pants</a>
-                                    <p class="fg-theme">$19.99</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
         <div class="text-center mt-4">
