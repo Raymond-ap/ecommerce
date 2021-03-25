@@ -69,40 +69,25 @@
             <div class="col-lg-6 px-lg-5">
                 <h5 class="text-secondary">Your Orders</h5>
                 <ul class="product-cart-list">
+                {% for item in items %}
                     <li class="cart-item">
                         <div class="img-place">
                             <img src="{% static 'img/Super_Slim-fit_Pants.jpg' %}" alt="">
                         </div>
                         <div class="caption">
-                            <h5>Product Name</h5>
+                            <h5>{{item.item.title}}</h5>
                             <div class="mb-0">Qty:
                                 <div class="d-inline-flex number-input number-input-sm">
                                     <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
-                                    <input type="number" class="form-control" name="number" value="4" min="0" max="250">
+                                    <input type="number" class="form-control" name="number" value="{{item.quantity}}" min="0" max="250">
                                     <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
                                 </div>
                             </div>
-                            <p class="mb-0">Price: <span class="fg-theme">$19.99</span></p>
+                            <p class="mb-0"><span class="fg-theme">GHC{{item.item.price}}</span></p>
                         </div>
-                        <button class="btn btn-fab btn-sm"><span class="icon-trash-o"></span></button>
+                        <a href="{% url 'remove' item.item.id %}" class="btn btn-fab btn-sm"><span class="icon-trash-o"></span></a>
                     </li>
-                    <li class="cart-item">
-                        <div class="img-place">
-                            <img src="{% static 'img/Faux_Fur_Jacket.jpg' %}" alt="">
-                        </div>
-                        <div class="caption">
-                            <h5>Product Name</h5>
-                            <div class="mb-0">Qty:
-                                <div class="d-inline-flex number-input number-input-sm">
-                                    <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
-                                    <input type="number" class="form-control" name="number" value="2" min="0" max="250">
-                                    <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
-                                </div>
-                            </div>
-                            <p class="mb-0">Price: <span class="fg-theme">$19.99</span></p>
-                        </div>
-                        <button class="btn btn-fab btn-sm"><span class="icon-trash-o"></span></button>
-                    </li>
+                    {% endfor %}
                 </ul>
 
                 <div class="py-2 mb-4">
@@ -113,17 +98,17 @@
                 </div>
         
                 <div class="product-cart-invoice">
-                    <h6 class="d-flex flex-row justify-content-between">
+                    {% comment %} <h6 class="d-flex flex-row justify-content-between">
                         <span>SubTotal </span>
                         <span class="text-right text-secondary">$39.91</span>
                     </h6>
                     <h6 class="d-flex flex-row justify-content-between">
                         <span>Shipping </span>
                         <span class="text-right text-secondary">$3.99</span>
-                    </h6>
+                    </h6> {% endcomment %}
                     <h5 class="d-flex flex-row justify-content-between mt-3">
                         <span>Total </span>
-                        <span class="text-right text-secondary">$43.8</span>
+                        <span class="text-right text-secondary">GHC{{item.getTotalPrice}}</span>
                     </h5>
                 </div>
             </div>

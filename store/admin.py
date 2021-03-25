@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, ProductImage, Color, Comment
+from .models import *
 
 
 class ProductImageInline(admin.TabularInline):
@@ -15,7 +15,17 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'approved', 'date')
 
 
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ['item', 'quantity']
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['user', 'ordered']
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category)
 admin.site.register(Color)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
+admin.site.register(Order, OrderAdmin)

@@ -1,6 +1,7 @@
 from django.db import models
-from ckeditor.fields import RichTextField
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 
 
 class Color(models.Model):
@@ -68,22 +69,6 @@ class ProductImage(models.Model):
         return f'Images for {self.product.title}'
 
 
-class Comment(models.Model):
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name='reviews')
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    review = models.TextField()
-    approved = models.BooleanField(default=True)
-    date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-date']
-
-    def __str__(self):
-        return self.name
-
-
 class OrderItem(models.Model):
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -95,7 +80,7 @@ class OrderItem(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return self.item.name
+        return self.item.title
 
     @property
     def getTotalPrice(self):
@@ -112,22 +97,17 @@ class Order(models.Model):
         return f'{self.user.username}'
 
 
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    items = models.ManyToManyField(OrderItem)
-    date_ordered = models.DateTimeField(auto_now_add=True)
-    ordered = models.BooleanField(default=False)
+class Comment(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='reviews')
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    review = models.TextField()
+    approved = models.BooleanField(default=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date']
 
     def __str__(self):
-        return f'{self.user.username}'
-
-
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    items = models.ManyToManyField(OrderItem)
-    date_ordered = models.DateTimeField(auto_now_add=True)
-    ordered = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'{self.user.username}'
-
+        return self.name

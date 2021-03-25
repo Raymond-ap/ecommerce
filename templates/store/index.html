@@ -134,7 +134,7 @@
                                     GHC{{product.price}}
                                     </span></h5>
                                     <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
-                                    <a href="checkout.html" class="btn btn-theme my-1">Proceed Checkout</a>
+                                    <a href="{% url 'checkout' %}" class="btn btn-theme my-1">Proceed Checkout</a>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                 <div class="card card-product">
                     <div class="card-header">
                         <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                        <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
+                        <a href="{% url 'addtocart' product.id %}" class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></a>
                         <div class="btn btn-fab btn-sm" data-fancybox data-src="{{product.thumbnail.url}}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
                     </div>
                     <div class="card-body">
@@ -256,8 +256,8 @@
                                             <h5 class="mt-4 mb-3">Price: <span class="fg-theme">
                                             GHC{{product.price}}
                                             </span></h5>
-                                            <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
-                                            <a href="checkout.html" class="btn btn-theme my-1">Proceed Checkout</a>
+                                            <a href="{% url 'addtocart' product.id %}" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
+                                            <a href="{% url 'checkout' %}" class="btn btn-theme my-1">Proceed Checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@
                         <div class="card card-product">
                             <div class="card-header">
                                 <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Like it"><span class="icon-heart"></span></div>
-                                <div class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></div>
+                                <a href="{% url 'addtocart' product.id %}" class="btn btn-fab btn-sm" data-toggle-class="active" data-toggle="tooltip" data-placement="left" title="Add to Cart"><span class="icon-shopping-cart"></span></a>
                                 <div class="btn btn-fab btn-sm" data-fancybox data-src="{{product.thumbnail.url}}" data-toggle="tooltip" data-placement="left" title="View Image"><span class="icon-fullscreen fs-normal"></span></div>
                             </div>
                             <div class="card-body">

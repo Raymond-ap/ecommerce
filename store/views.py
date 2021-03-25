@@ -1,5 +1,13 @@
-from django.shortcuts import render
-from .models import Product, Category
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
+from django.contrib import messages
+from decimal import Decimal
+from .models import *
 
 
 def homePage(request):
@@ -46,13 +54,54 @@ def productDetail(request, slug):
     return render(request, 'store/product-details.html', context)
 
 
-def aboutView(request):
-    return render(request, 'store/about.html')
+def addCart(request, pk):
+    if request.user.is_authenticated:
+        product = get_object_or_404(Product, id=pk)
+        order_item, created = OrderItem.objects.get_or_create(
+            user=request.user,
+            item=product,
+            ordered=False
+        )
+
+        order_set = Order.objects.filter(user=request.user, ordered=False)
+        if order_set.exists():
+            order = order_set[0]
+            # check if order item is in order
+            if order.items.filter(item_id=product.id).exists():
+                # update qunatity
+                order_item.quantity += 1
+                order_item.save()
+            else:
+                order.items.add(order_item)
+                messages.info(request, 'Item added')
+        else:
+            order = Order.objects.create(user=request.user)
+            order.items.add(order_item)
+
+    return redirect('checkout')
+
+
+def removeCartItem(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    order_set = Order.objects.filter(user=request.user, ordered=False)
+    orderItems = OrderItem.objects.filter(user=request.user, item=product)
+    if orderItems:
+        orderItems.delete()
+
+    return redirect('checkout')
 
 
 def checkOutView(request):
-    return render(request, 'store/checkout.html')
+    items = OrderItem.objects.all()
+    context = {
+        'items': items
+    }
+    return render(request, 'store/checkout.html', context)
 
 
 def blogView(request):
     return render(request, 'store/blog.html')
+
+
+def aboutView(request):
+    return render(request, 'store/about.html')

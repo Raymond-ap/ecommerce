@@ -102,7 +102,7 @@
                 </div>
 
                 <h4 class="mt-4 mb-3">Price: GHC{{product.price}}</h4>
-                <a href="#" class="btn btn-theme-outline mr-2"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
+                <a href="{% url 'addtocart' product.id %}" class="btn btn-theme-outline mr-2"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
                 <a href="#" class="btn btn-theme">Proceed Checkout</a>
             </div>
         </div>
