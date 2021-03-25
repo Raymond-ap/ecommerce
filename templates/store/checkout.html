@@ -72,7 +72,7 @@
                 {% for item in items %}
                     <li class="cart-item">
                         <div class="img-place">
-                            <img src="{% static 'img/Super_Slim-fit_Pants.jpg' %}" alt="">
+                            <img src="{{item.item.thumbnail.url}}" alt="{{item.item.title}}">
                         </div>
                         <div class="caption">
                             <h5>{{item.item.title}}</h5>
@@ -83,7 +83,7 @@
                                     <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
                                 </div>
                             </div>
-                            <p class="mb-0"><span class="fg-theme">GHC{{item.item.price}}</span></p>
+                            <p class="mb-0">Price: <span class="fg-theme">GHC{{item.item.price}}</span></p>
                         </div>
                         <a href="{% url 'remove' item.item.id %}" class="btn btn-fab btn-sm"><span class="icon-trash-o"></span></a>
                     </li>

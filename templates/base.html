@@ -302,7 +302,7 @@
                 data-target="#cartView"
               >
                 <span class="icon icon-shopping-cart"></span>
-                <div class="badge badge-theme">2</div>
+                <div class="badge badge-theme">{{items.count}}</div>
               </div>
             </li>
             <li class="nav-item d-lg-none px-1">
@@ -345,17 +345,18 @@
         </span>
         <p class="ml-3 mb-0 fs-large">
           Your Cart
-          <span class="badge bg-theme fg-white ml-2 fs-normal">6</span>
+          <span class="badge bg-theme fg-white ml-2 fs-normal">{{items.count}}</span>
         </p>
       </div>
       <div class="charm-content">
         <ul class="product-cart-list">
+        {% for item in items %}
           <li class="cart-item">
             <div class="img-place">
-              <img src="{% static 'img/Super_Slim-fit_Pants.jpg' %}" alt="" />
+              <img src="{{item.item.thumbnail.url}}" alt="{{item.item.title}}" />
             </div>
             <div class="caption">
-              <h5>Product Name</h5>
+              <h5>{{item.item.title}}</h5>
               <div class="mb-0">
                 Qty:
                 <div class="d-inline-flex number-input number-input-sm">
@@ -366,7 +367,7 @@
                     type="number"
                     class="form-control"
                     name="number"
-                    value="4"
+                    value="{{item.quantity}}"
                     min="0"
                     max="250"
                   />
@@ -375,49 +376,22 @@
                   </button>
                 </div>
               </div>
-              <p class="mb-0">Price: <span class="fg-theme">$19.99</span></p>
+              <p class="mb-0">Price: <span class="fg-theme">GHC{{item.item.price}}</span></p>
             </div>
-            <button class="btn btn-fab btn-sm">
+            <a href="{% url 'remove' item.item.id %}" class="btn btn-fab btn-sm">
               <span class="icon-trash-o"></span>
-            </button>
+            </a>
           </li>
-          <li class="cart-item">
-            <div class="img-place">
-              <img src="{% static 'img/Faux_Fur_Jacket.jpg' %}" alt="" />
-            </div>
-            <div class="caption">
-              <h5>Product Name</h5>
-              <div class="mb-0">
-                Qty:
-                <div class="d-inline-flex number-input number-input-sm">
-                  <button class="btn btn-theme btn-sm btn-decrease">
-                    <span class="icon-minus"></span>
-                  </button>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="number"
-                    value="2"
-                    min="0"
-                    max="250"
-                  />
-                  <button class="btn btn-theme btn-sm btn-increase">
-                    <span class="icon-plus"></span>
-                  </button>
-                </div>
-              </div>
-              <p class="mb-0">Price: <span class="fg-theme">$19.99</span></p>
-            </div>
-            <button class="btn btn-fab btn-sm">
-              <span class="icon-trash-o"></span>
-            </button>
-          </li>
+          {% empty %}
+          <p> Cart is empty </p>
+          {% endfor %}
+        
         </ul>
 
         <div class="product-cart-invoice">
           <h5 class="d-flex flex-row justify-content-between">
             <span>SubTotal :</span>
-            <span class="text-right text-secondary">$39.91</span>
+            <span class="text-right text-secondary">GHC{{item.getTotalPrice}}</span>
           </h5>
 
           <div class="text-center mt-4">
@@ -481,7 +455,6 @@
       </div>
     </div>
     <!-- End modal search -->
-
     {% block content %} {% endblock content %}
     <!-- Footer -->
     <div class="site-footer">
