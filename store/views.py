@@ -10,6 +10,11 @@ from decimal import Decimal
 from .models import *
 
 
+def logoutUser(request):
+    logout(request)
+    return redirect('products')
+
+
 def homePage(request):
     featured = Product.objects.filter(published=True).order_by('created')[:4]
     new_arrival = Product.objects.filter(
@@ -96,7 +101,11 @@ def checkOutView(request):
     context = {
         'items': items
     }
-    return render(request, 'store/checkout.html', context)
+    if not request.user.is_authenticated:
+        messages.info(request, 'Login required')
+        return redirect('products')
+    else:
+        return render(request, 'store/checkout.html', context)
 
 
 def blogView(request):

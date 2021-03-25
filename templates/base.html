@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
     <title>Shoperce {% block title %}{% endblock title %}</title>
 
     <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}" />
@@ -129,24 +131,34 @@
                 <span class="icon icon-search"></span>
               </div>
             </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item px-1">
+            <div class="btn dropdown-toggle-hover text-secondary">
+                <a href="{% url 'logout' %}"  >Logout</a>
+              </div>
+             
+            </li>
+            {% else %}
             <li class="nav-item px-1 dropdown" id="account">
               <div class="btn dropdown-toggle-hover text-secondary">
                 <span class="icon icon-user-circle-o"></span>
                 <span class="d-none d-md-inline-block">My Account</span>
                 <div class="dropdown-menu p-0 mt-0">
                   <div class="account-switch active">
-                    <form class="card card-body border-0">
+                    <form class="card card-body border-0" action="" method="POST">
+                    {% csrf_token %}
                       <h5 class="text-center border-bottom pb-3">Login</h5>
 
                       <div class="input-group floating-label my-2">
                         <input
                           type="text"
-                          id="usernameLogin"
+                          id="username"
+                          name="username"
                           class="form-control"
                           required
                         />
                         <label
-                          for="usernameLogin"
+                          for="username"
                           class="floating-control-label"
                           >Username</label
                         >
@@ -154,12 +166,13 @@
                       <div class="input-group floating-label my-2">
                         <input
                           type="password"
-                          id="passwordLogin"
+                          id="password"
+                          name="password"
                           class="form-control"
                           required
                         />
                         <label
-                          for="passwordLogin"
+                          for="password"
                           class="floating-control-label"
                           >Password</label
                         >
@@ -167,22 +180,14 @@
                       <div
                         class="input-group justify-content-between my-2 align-items-center"
                       >
-                        <div class="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            class="custom-control-input"
-                            id="remember"
-                          />
-                          <label for="remember" class="custom-control-label"
-                            >Remember Me</label
-                          >
-                        </div>
+                        
                         <a href="#" class="fs-small fg-theme"
                           >Forgot Password?</a
                         >
                       </div>
                       <button
                         type="submit"
+                        name="Login"
                         class="btn btn-theme btn-block mb-1"
                       >
                         Login
@@ -210,19 +215,49 @@
                     </div>
                   </div>
                   <div class="account-switch">
-                    <form class="card card-body border-0">
+                    <form class="card card-body border-0" method="POST" action>
+                    {% csrf_token %}
                       <h5 class="text-center border-bottom pb-3">Register</h5>
                       <div class="input-group floating-label my-2">
                         <input
                           type="text"
-                          id="fullnameRegister"
+                          id="fname"
                           class="form-control"
+                          name="fname"
                           required
                         />
                         <label
-                          for="fullnameRegister"
+                          for="fname"
                           class="floating-control-label"
-                          >Fullname</label
+                          >First name</label
+                        >
+                      </div>
+                      <div class="input-group floating-label my-2">
+                        <input
+                          type="text"
+                          id="lname"
+                          class="form-control"
+                          name="lname"
+                          required
+                        />
+                        <label
+                          for="lname"
+                          class="floating-control-label"
+                          >Last name</label
+                        >
+                      </div>
+                      <div class="input-group floating-label my-2">
+                        <input
+                          type="text"
+                          id="username"
+                          class="form-control"
+                          name="username"
+                          required
+                        />
+                        <label
+                          for="username"
+                          class="floating-control-label"
+                          >Username</label
                         >
                       </div>
                       <div class="input-group floating-label my-2">
@@ -230,6 +265,7 @@
                           type="text"
                           id="emailRegister"
                           class="form-control"
+                          name="email"
                           required
                         />
                         <label
@@ -240,32 +276,35 @@
                       </div>
                       <div class="input-group floating-label my-2">
                         <input
-                          type="text"
-                          id="passwordRegister"
+                          type="password"
+                          id="password1"
+                          name="password1"
                           class="form-control"
                           required
                         />
                         <label
-                          for="passwordRegister"
+                          for="password1"
                           class="floating-control-label"
                           >Password</label
                         >
                       </div>
                       <div class="input-group floating-label my-2">
                         <input
-                          type="text"
-                          id="confirPasswordRegister"
+                          type="password"
+                          id="password2"
+                          name="password2"
                           class="form-control"
                           required
                         />
                         <label
-                          for="confirPasswordRegister"
+                          for="password2"
                           class="floating-control-label"
-                          >Confirm Password</label
+                          >Comfirm Password</label
                         >
                       </div>
                       <button
                         type="submit"
+                        name="Registration"
                         class="btn btn-theme btn-block mb-1"
                       >
                         Create Account
@@ -295,6 +334,7 @@
                 </div>
               </div>
             </li>
+            {% endif %}
             <li class="nav-item px-1">
               <div
                 class="btn btn-fab text-secondary"
@@ -454,6 +494,15 @@
         </div>
       </div>
     </div>
+
+    {% for message in messages %}
+      <div class="container">
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <strong></strong> {{message}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+      </div>
+    {% endfor %}
     <!-- End modal search -->
     {% block content %} {% endblock content %}
     <!-- Footer -->
@@ -615,7 +664,7 @@
     <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
     <script src="{% static 'js/google-maps.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script> -->
   </body>
 </html>
