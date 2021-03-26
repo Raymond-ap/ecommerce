@@ -38,7 +38,14 @@ def globalData(request):
         if user is not None:
             login(request, user)
         else:
-            messages.info(request, 'Login failed. Try again')
+            messages.warning(request, 'Login failed. Try again')
+
+    # search product
+    if request.method == 'POST' and 'Search' in request.POST:
+        data = request.POST
+        seacrhInput = data['Search']
+        search_results = Product.objects.filter(title__contains=seacrhInput)
+        # print('Results is =====', search_results)
 
     return {
         'items': items

@@ -46,10 +46,14 @@ def productsView(request):
 
 
 def productDetail(request, slug):
-    product = Product.objects.get(slug=slug)
-    product_images = product.images.all()
-
     products = Product.objects.filter(published=True).order_by('created')[:4]
+    # product = Product.objects.get(slug=slug)
+
+    try:
+        product = Product.objects.get(slug=slug, published=True)
+        product_images = product.images.all()
+    except Exception:
+        return redirect('404')
 
     context = {
         'product': product,
@@ -78,7 +82,7 @@ def addCart(request, pk):
                 order_item.save()
             else:
                 order.items.add(order_item)
-                messages.info(request, 'Item added')
+                messages.success(request, 'Cart updated')
         else:
             order = Order.objects.create(user=request.user)
             order.items.add(order_item)
@@ -92,6 +96,7 @@ def removeCartItem(request, pk):
     orderItems = OrderItem.objects.filter(user=request.user, item=product)
     if orderItems:
         orderItems.delete()
+        messages.info(request, 'Cart updated')
 
     return redirect('checkout')
 
@@ -114,3 +119,7 @@ def blogView(request):
 
 def aboutView(request):
     return render(request, 'store/about.html')
+
+
+def pageNotFound(request):
+    return render(request, 'store/404.html')

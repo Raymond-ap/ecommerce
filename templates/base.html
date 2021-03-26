@@ -49,6 +49,11 @@
               <li class="list-inline-item ml-2 d-none d-md-inline-block">
                 <a href="#" class="small text-secondary">Track your order</a>
               </li>
+                 {% if  request.user.is_authenticated %}
+                   <li class="list-inline-item ml-2 d-none d-md-inline-block">
+                    <a href="{% url 'logout' %}" class="small text-secondary">Logout</a>
+                  </li>
+                 {% endif %}
               <li class="list-inline-item ml-2">
                 <select class="custom-select custom-select-sm">
                   <option value="us">Dollar (US)</option>
@@ -131,14 +136,8 @@
                 <span class="icon icon-search"></span>
               </div>
             </li>
-            {% if request.user.is_authenticated %}
-            <li class="nav-item px-1">
-            <div class="btn dropdown-toggle-hover text-secondary">
-                <a href="{% url 'logout' %}"  >Logout</a>
-              </div>
-             
             </li>
-            {% else %}
+            {% if not request.user.is_authenticated %}
             <li class="nav-item px-1 dropdown" id="account">
               <div class="btn dropdown-toggle-hover text-secondary">
                 <span class="icon icon-user-circle-o"></span>
@@ -204,9 +203,6 @@
                       <div class="social-connect">
                         <a href="#" class="social-link bg-facebook fg-white"
                           ><span class="icon-facebook"></span
-                        ></a>
-                        <a href="#" class="social-link bg-twitter fg-white"
-                          ><span class="icon-twitter"></span
                         ></a>
                         <a href="#" class="social-link bg-google-plus fg-white"
                           ><span class="icon-google-plus"></span
@@ -311,8 +307,8 @@
                       </button>
                       <small class="text-center text-secondary"
                         >Already have account?
-                        <a href="#" class="toggle-account-switch"
-                          >Register</a
+                        <a href="" class="toggle-account-switch"
+                          >Login</a
                         ></small
                       >
                     </form>
@@ -321,9 +317,6 @@
                       <div class="social-connect">
                         <a href="#" class="social-link bg-facebook fg-white"
                           ><span class="icon-facebook"></span
-                        ></a>
-                        <a href="#" class="social-link bg-twitter fg-white"
-                          ><span class="icon-twitter"></span
                         ></a>
                         <a href="#" class="social-link bg-google-plus fg-white"
                           ><span class="icon-google-plus"></span
@@ -369,9 +362,10 @@
         </span>
       </div>
       <div class="charm-content">
-        <div class="input-group my-2">
-          <input type="text" class="form-control" placeholder="Search" />
-        </div>
+        <form action="" method="POST" class="input-group my-2">
+        {% csrf_token %}
+          <input type="text" class="form-control" name="Search" placeholder="Search" required/>
+        </form>
         <div class="mobile-menu"></div>
       </div>
     </div>
@@ -423,7 +417,7 @@
             </a>
           </li>
           {% empty %}
-          <p> Cart is empty </p>
+          <p> Your cart is empty </p>
           {% endfor %}
         
         </ul>
@@ -458,16 +452,19 @@
             <button class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true" class="icon-close2"></span>
             </button>
-            <form class="container my-3">
+            <form class="container my-3" method="POST" action="">
+            {% csrf_token %}
               <div class="row justify-content-center">
                 <div class="col-lg-10">
                   <div class="input-group">
                     <input
                       type="text"
                       class="form-control"
+                      name="Search"
                       placeholder="Search here..."
+                      required
                     />
-                    <button type="submit" class="btn btn-theme">Search</button>
+                    <button type="submit" name="Search" class="btn btn-theme">Search</button>
                   </div>
                   <ul class="list-unstyled list-inline mt-2">
                     <li class="list-inline-item text-dark">Popular Search:</li>
@@ -497,7 +494,7 @@
 
     {% for message in messages %}
       <div class="container">
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
       <strong></strong> {{message}}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
