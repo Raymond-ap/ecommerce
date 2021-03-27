@@ -13,4 +13,5 @@ urlpatterns = [
     path('remove/<int:pk>', removeCartItem, name='remove'),
     path('logout', logoutUser, name='logout'),
     path('404', pageNotFound, name='404'),
+    path('contact', contact, name='contact'),
 ]

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
+from .forms import ProductFilter
 
 
 def globalData(request):
@@ -40,13 +41,14 @@ def globalData(request):
         else:
             messages.warning(request, 'Login failed. Try again')
 
-    # search product
-    if request.method == 'POST' and 'Search' in request.POST:
-        data = request.POST
-        seacrhInput = data['Search']
-        search_results = Product.objects.filter(title__contains=seacrhInput)
-        # print('Results is =====', search_results)
+    products = Product.objects.filter(published=True)
+    filters = ProductFilter(request.GET, queryset=products)
+    products = filters.qs
+    
+
 
     return {
-        'items': items
+        'items': items,
+        'products': products,
+        'filters': filters
     }

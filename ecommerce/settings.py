@@ -41,7 +41,11 @@ INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'ckeditor',
     'storages',
+    'django_filters',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

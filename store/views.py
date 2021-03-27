@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib import messages
 from decimal import Decimal
+from .forms import ProductFilter
 from .models import *
 
 
@@ -20,10 +21,13 @@ def homePage(request):
     new_arrival = Product.objects.filter(
         published=True).order_by('-created')[:8]
 
+    quaries = manageQuary(request)
+
     context = {
         'featured': featured,
         'new_arrival': new_arrival
     }
+
     return render(request, 'store/index.html', context)
 
 
@@ -38,9 +42,12 @@ def productsView(request):
         products = Product.objects.filter(
             published=True, category__category=category)
 
+    filters = ProductFilter(request.GET, queryset=products)
+    products = filters.qs
+
     context = {
         'products': products,
-        'categories': categories
+        'categories': categories,
     }
     return render(request, 'store/product.html', context)
 
@@ -123,3 +130,15 @@ def aboutView(request):
 
 def pageNotFound(request):
     return render(request, 'store/404.html')
+
+
+def contact(request):
+    return render(request, 'store/contact.html')
+
+
+def manageQuary(request):
+    products = Product.objects.filter(published=True)
+    if request.method == "GET":
+        filters = ProductFilter(request.GET, queryset=products)
+        products = filters.qs
+    return products

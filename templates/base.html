@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +119,7 @@
               >
             </li>
             <li class="nav-item px-lg-2">
-              <a href="contact.html" class="nav-link"
+              <a href="{% url 'contact' %}" class="nav-link"
                 ><div class="sr-only"><span class="icon-contacts"></span></div>
                 Contact</a
               >
@@ -362,9 +363,8 @@
         </span>
       </div>
       <div class="charm-content">
-        <form action="" method="POST" class="input-group my-2">
-        {% csrf_token %}
-          <input type="text" class="form-control" name="Search" placeholder="Search" required/>
+        <form action="" method="GET" class="input-group my-2">
+          {{filters.form.title}}
         </form>
         <div class="mobile-menu"></div>
       </div>
@@ -452,18 +452,12 @@
             <button class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true" class="icon-close2"></span>
             </button>
-            <form class="container my-3" method="POST" action="">
-            {% csrf_token %}
+            <form class="container my-3" method="GET" action="">
+
               <div class="row justify-content-center">
                 <div class="col-lg-10">
                   <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="Search"
-                      placeholder="Search here..."
-                      required
-                    />
+                    {{filters.form.title}}
                     <button type="submit" name="Search" class="btn btn-theme">Search</button>
                   </div>
                   <ul class="list-unstyled list-inline mt-2">
@@ -491,7 +485,6 @@
         </div>
       </div>
     </div>
-
     {% for message in messages %}
       <div class="container">
     <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
@@ -662,6 +655,16 @@
     <script src="{% static 'js/google-maps.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script> -->
+
+    <script>
+
+      const inputs = document.querySelectorAll('input')
+      inputs.forEach(el => {
+        el.className = 'form-control'
+      })
+    </script>
+    <script >
+    </script>
+    <!-- <scrip async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></scrip> -->
   </body>
 </html>
