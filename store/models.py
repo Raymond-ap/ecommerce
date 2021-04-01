@@ -70,7 +70,7 @@ class ProductImage(models.Model):
 
 
 class OrderItem(models.Model):
-    item = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    item = models.ForeignKey(Product,  on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     quantity = models.IntegerField(default=1)
