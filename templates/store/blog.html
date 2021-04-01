@@ -13,51 +13,13 @@
 <div class="site-section blog-page">
     <div class="container">
         <div class="row mt-4">
+        {% for i in loop  %}
             <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_1.jpg" alt="" class="img-fluid rounded mb-4"></a>
+                <a href="blog-single.html"><img src="{% static 'img/image_1.jpg' %}" alt="" class="img-fluid rounded mb-4"></a>
                 <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
                 <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_2.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_3.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_1.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_2.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_3.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_1.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_2.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="img/image_3.jpg" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
+        {% endfor %}
         </div>
 
         <nav>

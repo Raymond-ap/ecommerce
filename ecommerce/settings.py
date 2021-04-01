@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from botocore.client import Config
+import boto3
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,7 +46,11 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'crispy_forms',
+    'paystack'
 ]
+
+"""PAYSTACK_PUBLIC_KEY = xxxxx // paystack public key
+PAYSTACK_SCRET_KEY = xxxxx //paystack secret key"""
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -137,3 +144,27 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assests')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Heroku: Update database configuration from $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+
+AWS_ACCESS_KEY_ID = 'AKIAYWZIIRGGTVTCDL2O'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'ghlister'
+
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+s3 = boto3.resource(
+    's3',
+    aws_access_key_id='AKIAYWZIIRGGTVTCDL2O',
+    aws_secret_access_key='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',
+    config=Config(signature_version='s3v4')
+)
+
+AWS_S3_REGION_NAME = "us-east-2"

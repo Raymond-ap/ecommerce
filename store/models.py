@@ -70,7 +70,7 @@ class ProductImage(models.Model):
 
 
 class OrderItem(models.Model):
-    item = models.ForeignKey(Product, on_delete=models.CASCADE)
+    item = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     quantity = models.IntegerField(default=1)
@@ -111,3 +111,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CustomerInfo(models.Model):
+    full_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    address = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.full_name

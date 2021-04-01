@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib import messages
 from decimal import Decimal
-from .forms import ProductFilter
+from .forms import ProductFilter, CustomerInfoForm
 from .models import *
 
 
@@ -27,12 +27,15 @@ def homePage(request):
         'featured': featured,
         'new_arrival': new_arrival
     }
+    if quaries and request.GET:
+        return redirect('products')
 
     return render(request, 'store/index.html', context)
 
 
 def productsView(request):
     categories = Category.objects.all().order_by('-created')
+    quaries = manageQuary(request)
 
     # Get Category
     category = request.GET.get('category')
@@ -48,6 +51,7 @@ def productsView(request):
     context = {
         'products': products,
         'categories': categories,
+        'quaries': quaries
     }
     return render(request, 'store/product.html', context)
 
@@ -121,7 +125,11 @@ def checkOutView(request):
 
 
 def blogView(request):
-    return render(request, 'store/blog.html')
+    loop = ['', '', '', '', ]
+    context = {
+        'loop': loop
+    }
+    return render(request, 'store/blog.html', context)
 
 
 def aboutView(request):
@@ -142,3 +150,5 @@ def manageQuary(request):
         filters = ProductFilter(request.GET, queryset=products)
         products = filters.qs
     return products
+
+
