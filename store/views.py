@@ -126,7 +126,7 @@ def decreaseQuantity(request, pk):
                 order_item.quantity -= 1
                 order_item.save()
             if order_item.quantity < 1:
-                 order_item.delete()
+                order_item.delete()
             else:
                 order.items.add(order_item)
         else:

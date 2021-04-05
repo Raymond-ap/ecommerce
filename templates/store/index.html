@@ -228,9 +228,9 @@
                                             {% endif %}
                                             <p class="fs-large fw-bold mb-1 mt-3">Quantity:</p>
                                             <div class="number-input">
-                                                <button class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></button>
-                                                <input type="number" class="form-control" name="number" min="0" max="250">
-                                                <button class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></button>
+                                            <a href="{% url 'decrease' product.id %}" class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></a>
+                                            <input type="number" class="form-control" name="number" value="1" min="1" max="250">
+                                            <a href="{% url 'addtocart' product.id %}" class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></a>
                                             </div>
 
                                             <h5 class="mt-4 mb-3">Price: <span class="fg-theme">

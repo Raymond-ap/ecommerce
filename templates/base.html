@@ -394,20 +394,9 @@
               <div class="mb-0">
                 Qty:
                 <div class="d-inline-flex number-input number-input-sm">
-                  <button class="btn btn-theme btn-sm btn-decrease">
-                    <span class="icon-minus"></span>
-                  </button>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="number"
-                    value="{{item.quantity}}"
-                    min="0"
-                    max="250"
-                  />
-                  <button class="btn btn-theme btn-sm btn-increase">
-                    <span class="icon-plus"></span>
-                  </button>
+                  <a href="{% url 'decrease' item.item.id %}" class="btn btn-theme btn-sm btn-decrease"><span class="icon-minus"></span></a>
+                  <input type="number" class="form-control" name="number" value="{{item.quantity}}" min="1" max="250">
+                  <a href="{% url 'addtocart' item.item.id %}" class="btn btn-theme btn-sm btn-increase"><span class="icon-plus"></span></a>
                 </div>
               </div>
               <p class="mb-0">Price: <span class="fg-theme">GHC{{item.item.price}}</span></p>
