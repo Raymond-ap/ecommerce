@@ -26,9 +26,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_44bf7y+gl59e=2*2&9xx1sf8kn()-kazpms_-a9*s9*heq1%#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['canonshop.herokuapp.com']
+ALLOWED_HOSTS = ['canonshop.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
