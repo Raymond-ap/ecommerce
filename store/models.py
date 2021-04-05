@@ -121,3 +121,34 @@ class CustomerInfo(models.Model):
 
     def __str__(self):
         return self.full_name
+
+
+class Blog(models.Model):
+    title = models.CharField(max_length=200)
+    thumbnail = models.ImageField(upload_to='images/blog', blank=True, null=True)
+    detail = RichTextField()
+    created = models.DateTimeField(auto_now_add=True)
+    published = models.BooleanField(default=True)
+    slug = models.SlugField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-created']
+
+    # Generate random slugs
+    def save(self, *args, **kwargs):
+        global str
+        if self.slug == None:
+            slug = slugify(self.title)
+
+            has_slug = Blog.objects.filter(slug=slug).exists()
+            count = 1
+            while has_slug:
+                count += 1
+                slug = slugify(self.slug) + '-' + str(count)
+                has_slug = Blog.objects.filter(slug=slug).exists()
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+    

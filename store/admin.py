@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('product' ,'name', 'email', 'approved', 'date')
+    list_display = ('product', 'name', 'email', 'approved', 'date')
 
 
 class OrderItemAdmin(admin.ModelAdmin):
@@ -23,9 +23,14 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['user', 'ordered']
 
 
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'published', 'created')
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category)
 admin.site.register(Color)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(Blog, BlogAdmin)

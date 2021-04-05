@@ -74,7 +74,7 @@ def productDetail(request, slug):
         return redirect('404')
 
     comments = Comment.objects.filter(product=product,approved=True).order_by('-date')
-    
+
     if request.method == 'POST':
         data = request.POST
         comment = Comment(
@@ -185,6 +185,9 @@ def blogView(request):
     }
     return render(request, 'store/blog.html', context)
 
+
+def blogDetail(request):
+    return render(request, 'store/blog-details.html')
 
 def aboutView(request):
     return render(request, 'store/about.html')
