@@ -10,6 +10,7 @@ urlpatterns = [
     path('detail/<slug:slug>', productDetail, name='detail'),
     path('checkout', checkOutView, name='checkout'),
     path('addtocart/<int:pk>', addCart, name='addtocart'),
+    path('decrease/<int:pk>', decreaseQuantity, name='decrease'),
     path('remove/<int:pk>', removeCartItem, name='remove'),
     path('logout', logoutUser, name='logout'),
     path('404', pageNotFound, name='404'),

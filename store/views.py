@@ -108,6 +108,34 @@ def addCart(request, pk):
     return redirect('checkout')
 
 
+def decreaseQuantity(request, pk):
+    if request.user.is_authenticated:
+        product = get_object_or_404(Product, id=pk)
+        order_item, created = OrderItem.objects.get_or_create(
+            user=request.user,
+            item=product,
+            ordered=False
+        )
+
+        order_set = Order.objects.filter(user=request.user, ordered=False)
+        if order_set.exists():
+            order = order_set[0]
+            # check if order item is in order
+            if order.items.filter(item_id=product.id).exists():
+                # update qunatity
+                order_item.quantity -= 1
+                order_item.save()
+            if order_item.quantity < 1:
+                 order_item.delete()
+            else:
+                order.items.add(order_item)
+        else:
+            order = Order.objects.create(user=request.user)
+            order.items.add(order_item)
+
+    return redirect('checkout')
+
+
 def removeCartItem(request, pk):
     product = get_object_or_404(Product, id=pk)
     order_set = Order.objects.filter(user=request.user, ordered=False)
