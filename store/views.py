@@ -73,7 +73,8 @@ def productDetail(request, slug):
     except Exception:
         return redirect('404')
 
-    comments = Comment.objects.filter(product=product,approved=True).order_by('-date')
+    comments = Comment.objects.filter(
+        product=product, approved=True).order_by('-date')
 
     if request.method == 'POST':
         data = request.POST
@@ -94,7 +95,7 @@ def productDetail(request, slug):
         'product_images': product_images,
         'products': products,
         'form': form,
-        'comments':comments
+        'comments': comments
     }
     return render(request, 'store/product-details.html', context)
 
@@ -179,15 +180,34 @@ def checkOutView(request):
 
 
 def blogView(request):
-    loop = ['', '', '', '', ]
+    blogs = Blog.objects.filter(published=True).order_by('-created')
+
+    # Paginator
+    paginator = Paginator(blogs, 10)
+    page_number = request.GET.get('page', 1)
+    page_objects = paginator.get_page(page_number)
+
     context = {
-        'loop': loop
+        'blogs': blogs,
+        'page_objects': page_objects
     }
     return render(request, 'store/blog.html', context)
 
 
-def blogDetail(request):
-    return render(request, 'store/blog-details.html')
+def blogDetail(request, slug):
+    blogs = Blog.objects.filter(published=True).order_by('created')
+
+    try:
+        blog = Blog.objects.get(slug=slug, published=True)
+    except Exception:
+        return redirect('404')
+
+    context = {
+        'blog': blog,
+        'blogs': blogs
+    }
+    return render(request, 'store/blog-details.html', context)
+
 
 def aboutView(request):
     return render(request, 'store/about.html')

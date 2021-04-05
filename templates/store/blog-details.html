@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% static "img" as baseUrl %} 
 {% load crispy_forms_tags %}
-{% block title %}- blog detail{% endblock title %}
+{% block title %}- {{blog.title}}{% endblock title %}
 {% block content %}
 <section class="site-section blog-page-single">
     <div class="container">
@@ -9,29 +10,20 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'blog' %}">Blog</a></li>
-                <li class="breadcrumb-item active">The Best Blazer Collection in March</li>
+                <li class="breadcrumb-item active">{{blog.title}}</li>
             </ul>
         </nav>
       <div class="row">
         <div class="col-lg-8 blog-content mb-4 mb-lg-0">
             <div class="img-place">
-                <img src="{% static 'img/campaign-men.jpg' %}" alt="">
+            {% if blog.thumbnail %}
+                <img src="{{blog.thumbnail.url}}" alt="" class="img-fluid rounded mb-4">
+            {% endif %}
             </div>
-          <h3 class="mb-4">1. Lorem ipsum dolor sit amet consectetur adipisicing elit</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda nihil aspernatur nemo sunt, qui, harum repudiandae quisquam eaque dolore itaque quod tenetur quo quos labore?</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae expedita cumque necessitatibus ducimus debitis totam, quasi praesentium eveniet tempore possimus illo esse, facilis? Corrupti possimus quae ipsa pariatur cumque, accusantium tenetur voluptatibus incidunt reprehenderit, quidem repellat sapiente, id, earum obcaecati.</p>
-    
-          <blockquote>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident vero tempora aliquam excepturi labore, ad soluta voluptate necessitatibus. Nulla error beatae, quam, facilis suscipit quaerat aperiam minima eveniet quis placeat.</p>
-          </blockquote>
-    
-          <p>Eveniet deleniti accusantium nulla natus nobis nam asperiores ipsa minima laudantium vero cumque cupiditate ipsum ratione dicta, expedita quae, officiis provident harum nisi! Esse eligendi ab molestias, quod nostrum hic saepe repudiandae non. Suscipit reiciendis tempora ut, saepe temporibus nemo.</p>
-          <h3 class="mb-4">2. Lorem ipsum dolor sit amet consectetur adipisicing elit</h3>
-          <p>Accusamus, temporibus, ullam. Voluptate consectetur laborum totam sunt culpa repellat, dolore voluptas. Quaerat cum ducimus aut distinctio sit, facilis corporis ab vel alias, voluptas aliquam, expedita molestias quisquam sequi eligendi nobis ea error omnis consequatur iste deleniti illum, dolorum odit.</p>
-          <p>In adipisci corporis at delectus! Cupiditate, voluptas, in architecto odit id error reprehenderit quam quibusdam excepturi distinctio dicta laborum deserunt qui labore dignissimos necessitatibus reiciendis tenetur corporis quas explicabo exercitationem suscipit. Nisi quo nulla, nihil harum obcaecati vel atque quos.</p>
-          <p>Amet sint explicabo maxime accusantium qui dicta enim quia, nostrum id libero voluptates quae suscipit dolor quam tenetur dolores inventore illo laborum, corporis non ex, debitis quidem obcaecati! Praesentium maiores illo atque error! Earum, et, fugit. Sint, delectus molestiae. Totam.</p>
-    
-
+          <h3 class="mb-4">{{blog.title}}</h3>
+          <p>
+            {{blog.detail|safe}}
+          </p>
           {% comment %} <div class="mt-3">
               <p class="mb-0">Share:</p>
               <div class="social-connect">
@@ -162,51 +154,19 @@
                     <h4 class="fw-normal">Recent Post</h4>
                 </div>
                 <ul class="recent-post">
+                {% for blog in blogs|slice:":6" %}
                     <li>
+                        {% if blog.thumbnail %}
                         <div class="img-place">
-                            <img src="img/image_1.jpg" alt="">
+                            <img src="{{blog.thumbnail.url}}" alt="" style="height: 11vh; object-fit:contain;">
                         </div>
+                        {% endif %}
                         <div class="caption">
-                            <a href="#">Top 10 Sweater in March</a>
-                            <small class="d-block">21 March 2022</small>
+                            <a href="{% url 'blogDetail' blog.slug %}">{{blog.title|title}}</a>
+                            <small class="d-block">{{blog.created}}</small>
                         </div>
                     </li>
-                    <li>
-                        <div class="img-place">
-                            <img src="img/image_2.jpg" alt="">
-                        </div>
-                        <div class="caption">
-                            <a href="#">Top 10 Sweater in March</a>
-                            <small class="d-block">21 March 2022</small>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="img-place">
-                            <img src="img/image_3.jpg" alt="">
-                        </div>
-                        <div class="caption">
-                            <a href="#">Top 10 Sweater in March</a>
-                            <small class="d-block">21 March 2022</small>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="img-place">
-                            <img src="img/campaign-men.jpg" alt="">
-                        </div>
-                        <div class="caption">
-                            <a href="#">Top 10 Sweater in March</a>
-                            <small class="d-block">21 March 2022</small>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="img-place">
-                            <img src="img/family_campaign_kids.jpg" alt="">
-                        </div>
-                        <div class="caption">
-                            <a href="#">Top 10 Sweater in March</a>
-                            <small class="d-block">21 March 2022</small>
-                        </div>
-                    </li>
+                {% endfor %}
                 </ul>
             </div>
 
