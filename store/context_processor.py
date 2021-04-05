@@ -7,9 +7,11 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProductFilter
 
-
 def globalData(request):
+    totalPrice = 0
     items = OrderItem.objects.all()
+    for item in items:
+        totalPrice +=  item.getTotalPrice
 
     #  User Registration
     if request.method == 'POST' and 'Registration' in request.POST:
@@ -50,5 +52,6 @@ def globalData(request):
     return {
         'items': items,
         'products': products,
-        'filters': filters
+        'filters': filters,
+        'totalPrice':totalPrice
     }

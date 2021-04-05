@@ -149,8 +149,9 @@ def removeCartItem(request, pk):
 
 def checkOutView(request):
     items = OrderItem.objects.all()
+        
     context = {
-        'items': items
+        'items': items,
     }
     if not request.user.is_authenticated:
         messages.info(request, 'Login required')
