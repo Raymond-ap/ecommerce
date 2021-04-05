@@ -8,8 +8,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProductFilter
 
 def globalData(request):
+    blogs = Blog.objects.filter(published=True)
     totalPrice = 0
     items = OrderItem.objects.all()
+
     for item in items:
         totalPrice +=  item.getTotalPrice
 
@@ -53,5 +55,6 @@ def globalData(request):
         'items': items,
         'products': products,
         'filters': filters,
-        'totalPrice':totalPrice
+        'totalPrice':totalPrice,
+        'blogs':blogs.count()
     }

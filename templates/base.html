@@ -87,42 +87,92 @@
         <div class="navbar-collapse collapse" id="mobileNav">
           <ul class="navbar-nav">
             <li class="nav-item px-lg-2">
+              {% if request.get_full_path == '/' %}
               <a href="{% url 'home' %}" class="nav-link active"
                 ><div class="sr-only"><span class="icon-home2"></span></div>
                 Home</a
               >
+              {% else %}
+              <a href="{% url 'home' %}" class="nav-link"
+                ><div class="sr-only"><span class="icon-home2"></span></div>
+                Home</a
+              >
+              {% endif %}
             </li>
+
             <li class="nav-item px-lg-2 dropdown-hover dropdown-custom">
+            {% if request.get_full_path == '/products' %}
               <a
                 href="{% url 'products' %}"
-                class="nav-link dropdown-toggle-hover"
+                class="nav-link active"
                 ><div class="sr-only">
                   <span class="icon-format_list_bulleted"></span>
                 </div>
                 Products</a
               >
+              {% else %}
+             <a
+                href="{% url 'products' %}"
+                class="nav-link"
+                ><div class="sr-only">
+                  <span class="icon-format_list_bulleted"></span>
+                </div>
+                Products</a
+              >
+            {% endif %}
             </li>
+
             <li class="nav-item px-lg-2">
-              <a href="{% url 'about' %}" class="nav-link"
+            {% if request.get_full_path == '/about' %}
+              <a href="{% url 'about' %}" class="nav-link active"
                 ><div class="sr-only"><span class="icon-domain"></span></div>
                 About</a
               >
+              {% else %}
+               <a href="{% url 'about' %}" class="nav-link"
+                ><div class="sr-only"><span class="icon-domain"></span></div>
+                About</a
+              >
+              {% endif %}
             </li>
+
+            {% if blogs > 0 %}
             <li class="nav-item px-lg-2 dropdown-hover">
+             {% if request.get_full_path == '/blog' %}
               <a
                 href="{% url 'blog' %}"
-                class="nav-link dropdown-toggle-hover mb-0"
+                class="nav-link active"
                 ><div class="sr-only">
                   <span class="icon-icon-book"></span>
                 </div>
                 Blog</a
               >
+              {% else %}
+               <a
+                href="{% url 'blog' %}"
+                class="nav-link"
+                ><div class="sr-only">
+                  <span class="icon-icon-book"></span>
+                </div>
+                Blog</a
+              >
+              {% endif %}
             </li>
+            {% endif %}
+
+
             <li class="nav-item px-lg-2">
-              <a href="{% url 'contact' %}" class="nav-link"
+             {% if request.get_full_path == '/contact' %}
+              <a href="{% url 'contact' %}" class="nav-link active"
                 ><div class="sr-only"><span class="icon-contacts"></span></div>
                 Contact</a
               >
+              {% else %}
+               <a href="{% url 'contact' %}" class="nav-link"
+                ><div class="sr-only"><span class="icon-contacts"></span></div>
+                Contact</a
+              >
+              {% endif %}
             </li>
           </ul>
         </div>

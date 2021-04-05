@@ -16,7 +16,7 @@
         <div class="row mt-4">
         {% for blog in page_objects  %}
             <div class="col-md-6 col-lg-4 mb-5">
-            {% if blog.thumbnail.url %}
+            {% if blog.thumbnail %}
                 <a href="{% url 'blogDetail' blog.slug %}"><img src="{{blog.thumbnail.url}}" alt="{{blog.title}}" class="img-fluid rounded mb-4"></a>
             {% endif %}
                 <h3 class="fw-normal"><a href="{% url 'blogDetail' blog.slug %}" class="text-dark">{{blog.title|title}}</a></h3>
