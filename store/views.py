@@ -45,13 +45,20 @@ def productsView(request):
         products = Product.objects.filter(
             published=True, category__category=category)
 
+    # Paginator
+    paginator = Paginator(products, 16)
+    page_number = request.GET.get('page', 1)
+    page_objects = paginator.get_page(page_number)
+
     filters = ProductFilter(request.GET, queryset=products)
     products = filters.qs
 
     context = {
         'products': products,
         'categories': categories,
-        'quaries': quaries
+        'quaries': quaries,
+        'page_objects': page_objects,
+        'paginator': paginator,
     }
     return render(request, 'store/product.html', context)
 
@@ -150,5 +157,3 @@ def manageQuary(request):
         filters = ProductFilter(request.GET, queryset=products)
         products = filters.qs
     return products
-
-

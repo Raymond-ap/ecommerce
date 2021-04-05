@@ -118,7 +118,7 @@
         <div class="row no-gutters align-items-center">
           <div class="col-6">
             <p class="fs-small mb-0 text-secondary">
-              Showing 12 out of 1432 items
+              Showing {{page_objects}} of {{paginator.count}} items
             </p>
           </div>
           <div class="col-6 text-right">
@@ -133,7 +133,7 @@
         </div>
 
         <div class="row mt-3">
-          {% for product in products %}
+          {% for product in page_objects %}
 
           <!-- Modal Product -->
           <div
@@ -314,21 +314,19 @@
 
         <nav>
           <ul class="pagination justify-content-end">
+          {% if page_objects.has_previous  %}
             <li class="page-item">
-              <a href="#" class="page-link">1</a>
+              <a href="?page={{page_objects.previous_page_number}}" class="page-link">Previous</a>
             </li>
-            <li class="page-item active">
-              <a href="#" class="page-link">2</a>
-            </li>
+          {% endif %}
             <li class="page-item">
-              <a href="#" class="page-link">3</a>
+              <a href="#" class="page-link">{{page_objects.number}}</a>
             </li>
+            {% if page_objects.has_next  %}
             <li class="page-item">
-              <a href="#" class="page-link">4</a>
+              <a href="?page={{page_objects.next_page_number }}" class="page-link">Next</a>
             </li>
-            <li class="page-item">
-              <a href="#" class="page-link">Next</a>
-            </li>
+            {% endif %}
           </ul>
         </nav>
       </div>
