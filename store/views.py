@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib import messages
 from decimal import Decimal
-from .forms import ProductFilter, CustomerInfoForm
+from .forms import ProductFilter, CustomerInfoForm, CommentForm
 from .models import *
 
 
@@ -65,7 +65,7 @@ def productsView(request):
 
 def productDetail(request, slug):
     products = Product.objects.filter(published=True).order_by('created')[:4]
-    # product = Product.objects.get(slug=slug)
+    form = CommentForm()
 
     try:
         product = Product.objects.get(slug=slug, published=True)
@@ -76,7 +76,8 @@ def productDetail(request, slug):
     context = {
         'product': product,
         'product_images': product_images,
-        'products': products
+        'products': products,
+        'form':form
     }
     return render(request, 'store/product-details.html', context)
 

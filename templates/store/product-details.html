@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %}{% endblock title %}
 {% block content %}
 
@@ -128,7 +129,7 @@
                                 <!-- Review -->
                                 <div class="review-dialog">
                                     <div class="profile-picture">
-                                        <img src="img/avatar_1.jpg" alt="AVATAR">
+                                        <img src="{% static 'img/avatar_1.jpg' %}" alt="AVATAR">
                                     </div>
 
                                     <div class="ml-3">
@@ -148,30 +149,10 @@
                                     </div>
                                 </div>
 
-                                <div class="review-dialog">
-                                    <div class="profile-picture">
-                                        <img src="img/avatar_2.jpg" alt="AVATAR">
-                                    </div>
-
-                                    <div class="ml-3">
-                                        <div class="review-content mb-2">
-                                            <span class="fg-dark fs-large">Aliana Grande</span>
-
-                                            <span class="ratings">
-                                                <i class="icon-star"></i>
-                                                <i class="icon-star"></i>
-                                                <i class="icon-star"></i>
-                                                <i class="icon-star"></i>
-                                                <i class="icon-star-half"></i>
-                                            </span>
-                                        </div>
-
-                                        <p class="mb-0 text-secondary">Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos</p>
-                                    </div>
-                                </div>
                                 
                                 <!-- Add review -->
-                                <form class="review-form mt-5">
+                                <form class="review-form mt-5" action="" method="POST">
+                                {% csrf_token %}
                                     <h5 class="fg-dark">Add a review</h5>
 
                                     <p class="stext-102 cl6">
@@ -179,36 +160,7 @@
                                     </p>
 
                                     <div class="row p-b-25">
-                                        <div class="col-12">
-                                            <select class="form-control my-2">
-                                                <option>Your Rating</option>
-                                                <option value="1">1 Very Unsatisfactory</option>
-                                                <option value="2">2 Less Satisfactory</option>
-                                                <option value="3">3 Good Enough</option>
-                                                <option value="4">4 Satisfying</option>
-                                                <option value="5">5 Very Satisfactory</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="input-group floating-label my-2">
-                                                <textarea class="form-control" id="review" name="review" rows="6" required></textarea>
-                                                <label class="floating-control-label" for="review">Your review</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="input-group floating-label my-2">
-                                                <input class="form-control" id="name" type="text" name="name" required>
-                                                <label class="floating-control-label" for="name">Name</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="input-group floating-label my-2">
-                                                <input class="form-control" id="email" type="text" name="email" required>
-                                                <label class="floating-control-label" for="email">Email</label>
-                                            </div>
-                                        </div>
+                                       {{form|crispy}}
                                     </div>
 
                                     <button class="btn btn-theme">Submit</button>
