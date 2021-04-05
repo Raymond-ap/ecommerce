@@ -73,11 +73,28 @@ def productDetail(request, slug):
     except Exception:
         return redirect('404')
 
+    comments = Comment.objects.filter(product=product,approved=True).order_by('-date')
+    
+    if request.method == 'POST':
+        data = request.POST
+        comment = Comment(
+            product=product,
+            name=data['name'],
+            email=data['email'],
+            review=data['review']
+        )
+
+        if not Comment.objects.filter(product=product,
+                                      name=data['name'], email=data['email'], review=data['review']).exists():
+            comment.save()
+            return redirect('detail', slug=slug)
+
     context = {
         'product': product,
         'product_images': product_images,
         'products': products,
-        'form':form
+        'form': form,
+        'comments':comments
     }
     return render(request, 'store/product-details.html', context)
 
@@ -150,7 +167,7 @@ def removeCartItem(request, pk):
 
 def checkOutView(request):
     items = OrderItem.objects.all()
-        
+
     context = {
         'items': items,
     }

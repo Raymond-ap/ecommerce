@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'approved', 'date')
+    list_display = ('product' ,'name', 'email', 'approved', 'date')
 
 
 class OrderItemAdmin(admin.ModelAdmin):

@@ -114,7 +114,7 @@
                     <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Review (2)</a>
+                    <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Review ({{comments.count}})</a>
                 </li>
             </ul>
             <div class="tab-content mt-3" id="myTabContent">
@@ -127,6 +127,7 @@
                         <div class="col-sm-10 col-md-8 col-lg-6">
                             <div class="product-review">
                                 <!-- Review -->
+                                {% for comment in comments %}
                                 <div class="review-dialog">
                                     <div class="profile-picture">
                                         <img src="{% static 'img/avatar_1.jpg' %}" alt="AVATAR">
@@ -134,7 +135,7 @@
 
                                     <div class="ml-3">
                                         <div class="review-content mb-2">
-                                            <span class="fg-dark fs-large">John Grande</span>
+                                            <span class="fg-dark fs-large">{{comment.name}}</span>
 
                                             <span class="ratings">
                                                 <i class="icon-star"></i>
@@ -145,10 +146,12 @@
                                             </span>
                                         </div>
 
-                                        <p class="mb-0 text-secondary">Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos</p>
+                                        <p class="mb-0 text-secondary">
+                                        {{comment.review}}
+                                        </p>
                                     </div>
                                 </div>
-
+                                {% endfor %}
                                 
                                 <!-- Add review -->
                                 <form class="review-form mt-5" action="" method="POST">
@@ -163,7 +166,7 @@
                                        {{form|crispy}}
                                     </div>
 
-                                    <button class="btn btn-theme">Submit</button>
+                                    <button type="submit" class="btn btn-theme">Submit</button>
                                 </form>
                             </div>
                         </div>
