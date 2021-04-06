@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
+from decimal import Decimal
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.contrib import messages
-from decimal import Decimal
-from .forms import ProductFilter, CustomerInfoForm, CommentForm
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import *
 from .models import *
 
 
@@ -18,6 +19,7 @@ def logoutUser(request):
 
 def homePage(request):
     featured = Product.objects.filter(published=True).order_by('created')[:4]
+    blogs = Blog.objects.filter(published=True).order_by('-created')
     new_arrival = Product.objects.filter(
         published=True).order_by('-created')[:8]
 
@@ -25,7 +27,8 @@ def homePage(request):
 
     context = {
         'featured': featured,
-        'new_arrival': new_arrival
+        'new_arrival': new_arrival,
+        'blogs': blogs
     }
     if quaries and request.GET:
         return redirect('products')
@@ -37,7 +40,7 @@ def productsView(request):
     categories = Category.objects.all().order_by('-created')
     quaries = manageQuary(request)
 
-    # Get Category
+    # FILTER PRODUCT ON CATEGORY
     category = request.GET.get('category')
     if category == None:
         products = Product.objects.filter(published=True).order_by('created')
@@ -45,7 +48,7 @@ def productsView(request):
         products = Product.objects.filter(
             published=True, category__category=category)
 
-    # Paginator
+    # PAGINATOR
     paginator = Paginator(products, 16)
     page_number = request.GET.get('page', 1)
     page_objects = paginator.get_page(page_number)
@@ -218,7 +221,20 @@ def pageNotFound(request):
 
 
 def contact(request):
-    return render(request, 'store/contact.html')
+    form = ContactForm()
+    if request.method == 'POST':
+        data = request.POST
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            if not Contact.objects.filter(fullname=data['fullname'], email=data['email'], subject=data['subject'], message=data['message']).exists():
+                form.save()
+                messages.info(request, 'We will get back to you soon')
+                return redirect('contact')
+
+    context = {
+        'form': form
+    }
+    return render(request, 'store/contact.html', context)
 
 
 def manageQuary(request):

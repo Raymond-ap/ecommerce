@@ -27,6 +27,11 @@ class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'published', 'created')
 
 
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('fullname', 'email', 'subject', 'viewed','created')
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category)
 admin.site.register(Color)

@@ -12,10 +12,11 @@ def globalData(request):
     totalPrice = 0
     items = OrderItem.objects.all()
 
+    # Total ITEM PRICE IN CART
     for item in items:
         totalPrice +=  item.getTotalPrice
 
-    #  User Registration
+    #  USER REGISTRATION
     if request.method == 'POST' and 'Registration' in request.POST:
         data = request.POST
         user = User.objects.create_user(
@@ -32,7 +33,7 @@ def globalData(request):
             user.save()
             login(request, user)
 
-   # user login
+   # AUTHENTICATE LOGIN
     if request.method == "POST" and 'Login' in request.POST:
         data = request.POST
         user = authenticate(
@@ -45,16 +46,16 @@ def globalData(request):
         else:
             messages.warning(request, 'Login failed. Try again')
 
+    # SEARCH FILTER
     products = Product.objects.filter(published=True)
     filters = ProductFilter(request.GET, queryset=products)
     products = filters.qs
     
-
 
     return {
         'items': items,
         'products': products,
         'filters': filters,
         'totalPrice':totalPrice,
-        'blogs':blogs.count()
+        'blogs':blogs
     }

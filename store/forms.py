@@ -20,6 +20,12 @@ class ProductFilter(django_filters.FilterSet):
         }
 
 
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
+
 class CustomerInfoForm(forms.ModelForm):
     class Meta:
         model = CustomerInfo
@@ -30,7 +36,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = [
-             'name',
+            'name',
             'email',
             'review',
         ]

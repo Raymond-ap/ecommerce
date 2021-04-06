@@ -43,36 +43,37 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <form class="contact-form">
+                <form class="contact-form" action="" method="POST">
+                {% csrf_token %}
                     <div class="form-row">
                         <div class="col-12">
                             <div class="input-group floating-label my-2">
-                                <input type="text" id="fullname" class="form-control" required>
+                            {{form.fullname}}
                                 <label for="fullname" class="floating-control-label">Fullname</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="input-group floating-label my-2">
-                                <input type="text" id="email" class="form-control" required>
+                                {{form.email}}
                                 <label for="email" class="floating-control-label">Email</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="input-group floating-label my-2">
-                                <input type="text" id="subject" class="form-control" required>
+                                {{form.subject}}
                                 <label for="subject" class="floating-control-label">Subject</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="input-group floating-label my-2">
-                                <textarea class="form-control" id="message" rows="8" required></textarea>
+                                {{form.message}}
                                 <label for="message" class="floating-control-label">Message</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="input-group my-2">
                                 <div class="custom-file">
-                                    <input type="file" id="attach" class="custom-file-input">
+                                    {{form.attach}}
                                     <label for="attach" class="custom-file-label"><span class="icon-attach_file"></span> Attach File</label>
                                 </div>
                             </div>

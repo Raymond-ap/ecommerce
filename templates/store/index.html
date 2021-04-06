@@ -133,7 +133,7 @@
                                     <h5 class="mt-4 mb-3">Price: <span class="fg-theme">
                                     GHC{{product.price}}
                                     </span></h5>
-                                    <a href="#" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
+                                    <a href="{% url 'addtocart' product.id %}" class="btn btn-theme-outline mr-2 my-1"><span class="icon-add_shopping_cart"></span> Add to Cart</a>
                                     <a href="{% url 'checkout' %}" class="btn btn-theme my-1">Proceed Checkout</a>
                                 </div>
                             </div>
@@ -335,33 +335,30 @@
     </div>
 </div>
 
+{% if blogs.count > 0 %}
+
 <div class="site-section">
     <div class="container">
         <h2 class="title-section text-center">Our Latest News</h2>
 
         <div class="row mt-4">
+            {% for blog in blogs %}
             <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="{% static 'img/image_2.jpg' %}" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
+            {% if blog.thumbnail %}
+                <a href="{% url 'blogDetail' blog.slug %}"><img src="{{blog.thumbnail.url}}" alt="" class="img-fluid rounded mb-4"></a>
+            {% endif %}
+                <h3 class="fw-normal"><a href="{% url 'blogDetail' blog.slug %}" class="text-dark">{{blog.title|title}}</a></h3>
+                <div class="text-secondary">{{blog.created}}<div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="{% static 'img/image_3.jpg' %}" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-5">
-                <a href="blog-single.html"><img src="{% static 'img/image_1.jpg' %}" alt="" class="img-fluid rounded mb-4"></a>
-                <h3 class="fw-normal"><a href="blog-single.html" class="text-dark">7 Factors for Choosing Between Two Jobs</a></h3>
-                <div class="text-secondary">April 15, 2019 <span class="mx-2">|</span> <a href="#">2 Comments</a></div>
-            </div>
+            {% endfor %}
         </div>
 
         <div class="text-center">
-            <a href="news.html" class="btn btn-theme">View More</a>
+            <a href="{% url 'blog' %}" class="btn btn-theme">View More</a>
         </div>
     </div>
 </div>
+{% endif %}
 
 <div class="site-section info-section bg-light">
     <div class="container">

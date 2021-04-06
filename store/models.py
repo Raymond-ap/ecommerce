@@ -125,7 +125,8 @@ class CustomerInfo(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=200)
-    thumbnail = models.ImageField(upload_to='images/blog', blank=True, null=True)
+    thumbnail = models.ImageField(
+        upload_to='images/blog', blank=True, null=True)
     detail = RichTextField()
     created = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(default=True)
@@ -151,4 +152,19 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
-    
+
+
+class Contact(models.Model):
+    fullname = models.CharField(max_length=150)
+    email = models.EmailField()
+    subject = models.CharField(max_length=250)
+    message = models.TextField()
+    attach = models.FileField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    viewed = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['id']
+
+    def __str__(self):
+        return self.fullname
