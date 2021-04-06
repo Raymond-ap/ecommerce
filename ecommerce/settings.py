@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'crispy_forms',
-    'paystack'
+    'paystack',
 ]
 
 """PAYSTACK_PUBLIC_KEY = xxxxx // paystack public key
