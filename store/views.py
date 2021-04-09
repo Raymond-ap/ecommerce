@@ -287,4 +287,9 @@ def makePayment(request):
 
         PaymentIntent.objects.create(referrer=redirect_url, product=products)
 
-        return
+        return JsonResponse({
+            "payment_url": redirect_url
+        })
+    return JsonResponse({
+        "error": "Sorry service is not available"
+    })
