@@ -252,7 +252,7 @@ def checkOutView(request):
 
 
 # ============== PAYSTACK
-
+@csrf_exempt
 def makePayment(request):
     items = OrderItem.objects.all()
     totalPrice = 0

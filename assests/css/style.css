@@ -2452,3 +2452,7 @@ a.badge-theme:hover {
 .account-switch .floating-control-label:focus {
   top: -8px;
 }
+
+.card-product {
+  max-width: initial !important;
+}

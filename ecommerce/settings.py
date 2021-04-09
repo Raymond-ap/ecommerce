@@ -49,8 +49,7 @@ INSTALLED_APPS = [
     'paystack',
 ]
 
-"""PAYSTACK_PUBLIC_KEY = xxxxx // paystack public key
-PAYSTACK_SCRET_KEY = xxxxx //paystack secret key"""
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -157,8 +156,8 @@ AWS_STORAGE_BUCKET_NAME = 'ghlister'
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'   
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'   
 
 s3 = boto3.resource(
     's3',
