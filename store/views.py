@@ -1,20 +1,21 @@
+import json
 from decimal import Decimal
 
+import requests
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 from django.http.response import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
-from django.conf import settings
-import json
 from django.views.decorators.csrf import csrf_exempt
+from pypaystack import Customer, Plan, Transaction
 
 from .forms import *
 from .models import *
-
-from pypaystack import Transaction, Customer, Plan
 
 
 def logoutUser(request):
@@ -258,13 +259,32 @@ def makePayment(request):
 
     # Total ITEM PRICE IN CART
     for item in items:
-        totalPrice +=  item.getTotalPrice
+        totalPrice += item.getTotalPrice
 
     data = json.loads(request.body)
-    productss = data["products"]
+    products = data["products"]
     cost = totalPrice
 
     header = {
         "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
         "Content-Type": "application/json"
     }
+
+    data = {
+        "name": "Payment of products",
+        "amount": cost*100,
+        "description": f"Payment for selected products",
+        "collect_phone": True,
+    }
+
+    response = requests.POST(
+        'https://api.paystack.co/page', json=data, headers=header)
+
+    if response.status_code == 200:
+        response_data = response.Json()
+        slug = response_data['data']['slug']
+        redirect_url = f"https://paystack.com/pay/{slug}"
+
+        PaymentIntent.objects.create(referrer=redirect_url, product=products)
+
+        return
