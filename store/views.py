@@ -251,3 +251,20 @@ def checkOutView(request):
 
 
 # ============== PAYSTACK
+
+def makePayment(request):
+    items = OrderItem.objects.all()
+    totalPrice = 0
+
+    # Total ITEM PRICE IN CART
+    for item in items:
+        totalPrice +=  item.getTotalPrice
+
+    data = json.loads(request.body)
+    productss = data["products"]
+    cost = totalPrice
+
+    header = {
+        "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+        "Content-Type": "application/json"
+    }
