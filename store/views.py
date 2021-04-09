@@ -5,11 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.conf import settings
+
 
 from .forms import *
 from .models import *
+
+from pypaystack import Transaction, Customer, Plan
 
 
 def logoutUser(request):
@@ -243,3 +247,14 @@ def manageQuary(request):
         filters = ProductFilter(request.GET, queryset=products)
         products = filters.qs
     return products
+
+
+# ============== PAYSTACK
+def verify(request, id):
+    #Instantiate the transaction object to handle transactions.  
+    #Pass in your authorization key - if not set as environment variable PAYSTACK_AUTHORIZATION_KEY
+
+    transaction = Transaction(authorization_key="sk_myauthorizationkeyfromthepaystackguys")
+    response = transaction.verify(id)
+    data  = JsonResponse(response, safe=False)
+    return data
