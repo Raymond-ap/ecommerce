@@ -5,10 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.http import HttpResponse, JsonResponse
+from django.http.response import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.conf import settings
-
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import *
 from .models import *
@@ -173,19 +174,6 @@ def removeCartItem(request, pk):
     return redirect('checkout')
 
 
-def checkOutView(request):
-    items = OrderItem.objects.all()
-
-    context = {
-        'items': items,
-    }
-    if not request.user.is_authenticated:
-        messages.info(request, 'Login required')
-        return redirect('products')
-    else:
-        return render(request, 'store/checkout.html', context)
-
-
 def blogView(request):
     blogs = Blog.objects.filter(published=True).order_by('-created')
 
@@ -249,12 +237,17 @@ def manageQuary(request):
     return products
 
 
-# ============== PAYSTACK
-def verify(request, id):
-    #Instantiate the transaction object to handle transactions.  
-    #Pass in your authorization key - if not set as environment variable PAYSTACK_AUTHORIZATION_KEY
+def checkOutView(request):
+    items = OrderItem.objects.all()
 
-    transaction = Transaction(authorization_key="sk_myauthorizationkeyfromthepaystackguys")
-    response = transaction.verify(id)
-    data  = JsonResponse(response, safe=False)
-    return data
+    context = {
+        'items': items,
+    }
+    if not request.user.is_authenticated:
+        messages.info(request, 'Login required')
+        return redirect('products')
+    else:
+        return render(request, 'store/checkout.html', context)
+
+
+# ============== PAYSTACK
