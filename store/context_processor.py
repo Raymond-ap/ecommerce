@@ -44,7 +44,7 @@ def globalData(request):
         if user is not None:
             login(request, user)
         else:
-            messages.warning(request, 'Login failed. Try again')
+            messages.warning(request, 'Login failed. Please try again')
 
     # SEARCH FILTER
     products = Product.objects.filter(published=True)
