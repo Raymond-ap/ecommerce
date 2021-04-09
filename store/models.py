@@ -169,12 +169,3 @@ class Contact(models.Model):
     def __str__(self):
         return self.fullname
 
-
-class PaymentIntent(models.Model):
-    referrer = models.URLField()
-    product = models.CharField(max_length=300)
-    created = models.DateTimeField(auto_now_add=True)
-
-
-    def __str__(self):
-        return self.referrer

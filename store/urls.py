@@ -17,6 +17,5 @@ urlpatterns = [
     path('contact', contact, name='contact'),
     path('blogDetail/<slug:slug>', blogDetail, name='blogDetail'),
 
-    path('payment/', makePayment, name="payment"),
 
 ]
