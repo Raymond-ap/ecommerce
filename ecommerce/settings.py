@@ -168,6 +168,6 @@ s3 = boto3.resource(
 
 AWS_S3_REGION_NAME = "us-east-2"
 
-
+# PAYSTACK
 PAYSTACK_PUBLIC_KEY = 'pk_test_8fd3ab3f5b1cba0f9da5dbd19d4178955aa0b73c'
 PAYSTACK_SECRET_KEY = 'sk_test_13ca9272836d0e362ec3e95ef6da374b3ea980fa'

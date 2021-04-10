@@ -1,7 +1,7 @@
 import json
 from decimal import Decimal
 
-import requests
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
