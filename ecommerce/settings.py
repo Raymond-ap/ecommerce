@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'crispy_forms',
-    'paystack',
 ]
 
 

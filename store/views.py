@@ -12,7 +12,6 @@ from django.http import JsonResponse
 from django.http.response import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
-from pypaystack import Customer, Plan, Transaction
 
 from .forms import *
 from .models import *
