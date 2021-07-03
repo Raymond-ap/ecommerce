@@ -148,25 +148,25 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
 
-AWS_ACCESS_KEY_ID = 'AKIAYWZIIRGGTVTCDL2O'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'ghlister'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = ''
 
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'   
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 s3 = boto3.resource(
     's3',
-    aws_access_key_id='AKIAYWZIIRGGTVTCDL2O',
-    aws_secret_access_key='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',
+    aws_access_key_id='',
+    aws_secret_access_key='',
     config=Config(signature_version='s3v4')
 )
 
 AWS_S3_REGION_NAME = "us-east-2"
 
 # PAYSTACK
-PAYSTACK_PUBLIC_KEY = 'pk_test_8fd3ab3f5b1cba0f9da5dbd19d4178955aa0b73c'
-PAYSTACK_SECRET_KEY = 'sk_test_13ca9272836d0e362ec3e95ef6da374b3ea980fa'
+PAYSTACK_PUBLIC_KEY = ''
+PAYSTACK_SECRET_KEY = ''
