@@ -1,2 +1,2 @@
 # ecommerce
-Ecommerce app built with django 
+A Ecommerce application built with django and bootstrap template
